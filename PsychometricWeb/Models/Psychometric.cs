@@ -38,6 +38,8 @@
         public string UID { get; set; } = "";
         public string? FULLNAME { get; set; } = "";
         public string? UName { get; set; } = "";
+        public string? Phone { get; set; } = "";
+        public string? UserType { get; set; }
         public string? Password { get; set; }
         public int Role { get; set; }
     }

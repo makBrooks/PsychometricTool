@@ -13,6 +13,7 @@ namespace PsychometricWeb.Controllers
     public class PsychoController : Controller
     {
         private IPsychometricRepo _Psycho;
+     
         private readonly IConfiguration _config;
         public PsychoController(IPsychometricRepo Psycho, IConfiguration config)
         {
@@ -42,16 +43,22 @@ namespace PsychometricWeb.Controllers
         {
             try
             {
-                UsersDto dto = new UsersDto();
-                if (Log.userName == _config["AUserName"])
+                int retVal = 0;
+                var loginDetail = _Psycho.Login(Log, out retVal);
+               
+                if (loginDetail !=null)
                 {
-                    if (Log.Password == _config["APWD"])
+                    generateClaim(loginDetail);
+
+                    if (loginDetail.UID == "1")
                     {
-                        dto.UID = _config["AUserName"]!.ToString();
-                        dto.FULLNAME = "SuperAdmin";
-                        dto.Role = 1;
-                        generateClaim(dto);
-                        return Content(new JsonResponse { statuscode = 200, status = "success", msg = $"Welcome '{_config["AUserName"]}'" }.ToJson());
+
+                        return Content(new JsonResponse { statuscode = 200, status = "success", msg = $"Welcome '{loginDetail.FULLNAME}'" }.ToJson());
+                    }
+                    if (loginDetail.UID == "2")
+                    {
+                        return Content(new JsonResponse { statuscode = 200, status = "success", msg = $"Welcome '{loginDetail.FULLNAME}'" }.ToJson());
+
                     }
                     else
                     {
@@ -59,24 +66,10 @@ namespace PsychometricWeb.Controllers
                     }
 
                 }
-                else if (Log.userName == _config["UUserName"])
-                {
-                    if (Log.Password == _config["UPWD"])
-                    {
-                        dto.UID = _config["UUserName"]!.ToString();
-                        dto.FULLNAME = "User";
-                        dto.Role = 2;
-                        generateClaim(dto);
-                        return Content(new JsonResponse { statuscode = 200, status = "success", msg = $"Login Successfull, Welcome {_config["UUserName"]}" }.ToJson());
-                    }
-                    else
-                    {
-                        return Content(new JsonResponse { statuscode = 404, status = "warning", msg = "Invalid Password" }.ToJson());
-                    }
-                }
                 else
                 {
-                    return Content(new JsonResponse { statuscode = 404, status = "warning", msg = "Invalid UserName?user Does not Exist" }.ToJson());
+                    return Content(new JsonResponse { statuscode = 404, status = "warning", msg = "Invalid Password" }.ToJson());
+
                 }
 
             }
@@ -90,8 +83,11 @@ namespace PsychometricWeb.Controllers
             var identity = new ClaimsIdentity(SysManageAuthAttribute.SysManageAuthScheme);  // Specify the authentication type
             List<Claim> claims = new List<Claim>(){
                             new Claim(ClaimTypes.Role, user.Role.ToString()),
-                            new Claim(ClaimTypes.Actor, user.UID.ToString()),
-                            new Claim(ClaimTypes.Name, user.FULLNAME),
+                            new Claim("UID", user.UID),
+                            new Claim("FullName", user.FULLNAME),
+                            new Claim("UserName", user.UName),
+                            new Claim("MobileNo", user.Phone),
+                            new Claim("UserType", user.UserType),
                         };
             var isSystem = false;
             identity.AddClaims(claims);
