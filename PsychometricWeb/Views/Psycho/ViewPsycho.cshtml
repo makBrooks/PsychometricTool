@@ -1,0 +1,222 @@
+﻿@model IEnumerable<PsychometricWeb.Models.Psychometriclist>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Form with Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Psychometric View</h2>
+    <div class="row col-md-12" style="margin-top:10px;">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Name">Name:<span class="text-danger">*</span></label>
+                <input type="text" id="Name" name="Name" class="form-control" required>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" class="form-control" readonly>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="mobile">Mobile:</label>
+                <input type="text" id="mobile" name="mobile" class="form-control" readonly>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" style="margin-top:10px;">
+        <div class="text-center">
+            <button type="button" class="btn btn-success" id="btnSearch">Search</button>
+        </div>
+    </div>
+    <div class="text-end">
+        <button class="btn btn-outline-primary" id="Excel">Export to Excel</button>
+    </div>
+        <table id="datatable" style="display:none;">
+            <thead>
+                <tr>
+                    <th>SL#</th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                    <th>Most</th>
+                    <th>Least</th>
+                </tr>
+            </thead>
+            <tbody id="tblLocation">
+                
+            </tbody>
+        </table>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            //$("#datatable").hide();
+            AutoFillName();
+            $("#Excel").hide();
+        });
+        function AutoFillName() {
+            $("#Name").autocomplete({
+            source: function (request, response) {
+                var File = new Object();
+
+                File.Name = request.term;
+
+                $.ajax({
+                    url: '@Url.Content("~/Psycho/SearchName")',
+                    type: "POST",
+                    data: File,
+                    success: function (data) {
+                        console.log(data);
+                        //var loader = document.getElementById("loader");
+                        //loader.style.display = "none";
+                        if (data.length > 0) {
+                            response($.map(data, function (item) {
+                                return {
+                                    value: item.name,
+                                    mob: item.phone,
+                                    email:item.email
+                                }
+                            }))
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        response([]);
+                    }
+                });
+            },
+
+            minLength: 1,
+            select: function (event, ui) {
+                $("#Name").val(ui.item.value);
+                var mobile = ui.item.mob;
+                var eMail = ui.item.email;
+                $('#email').val(eMail);
+
+                $("#mobile").val(mobile);
+
+            }
+        });
+        }
+
+        $("#btnSearch").on("click", function (e) {
+            var fname = document.getElementById("Name").value;
+            if (fname.trim() === "") {
+                Swal.fire({
+                    title: '',
+                    text: 'Name can not be blank!',
+                    icon: 'warning',
+                    confirmButtonText: 'OK',
+                });
+                $("#Name").focus();
+                return false;
+            } 
+            var formData = {
+                Name: $('#Name').val(),
+                Email: $('#email').val(),
+                Phone: $('#mobile').val()
+            };
+            $.ajax({
+                url: '/Psycho/ViewPsycho',
+                type: 'GET',
+                data: formData, // No need for JSON.stringify if contentType is not set
+                success: function (response) {
+                    var data = response;
+                    var x = 1;
+                    $("#datatable").show();
+                    if (data != null || data!="") {
+                        $("#Excel").show();
+                    }                    
+                    $("#tblLocation").empty();
+
+                    // Loop through the data and append rows to the table
+                    for (var i = 0; i < data.length; i++) {
+                        //console.log(data[i].batchName);
+
+                        var row = "<tr>" +
+                            "<td>" + x + "</td>" +
+                            "<td>" + data[i].a + "</td>" +
+                            "<td>" + data[i].b + "</td>" +
+                            "<td>" + data[i].c + "</td>" +
+                            "<td>" + data[i].d + "</td>" +
+                            "<td>" + data[i].most + "</td>" +
+                            "<td>" + data[i].least + "</td>" +
+                            "</tr>";
+                        x++;
+                        $("#tblLocation").append(row);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: ' + error); // Display error message
+                }
+            });
+
+        });
+    </script>
+    <script>
+        //document.getElementById('Excel').addEventListener('click', function () {
+        //    var wb = XLSX.utils.table_to_book(document.getElementById('datatable'));
+        //    XLSX.writeFile(wb, 'Psychometric_data.xlsx');
+        //});
+        document.getElementById('Excel').addEventListener('click', function () {
+            var wb = XLSX.utils.book_new();
+
+            // Create worksheet
+            var ws = XLSX.utils.book_new();
+
+            // Add form data
+            var formData = [
+                ['Name:', document.getElementById('Name').value.trim()],
+                ['Email:', document.getElementById('email').value.trim()],
+                ['Mobile Number:', document.getElementById('mobile').value.trim()],
+                ['', '', '', '', '', '', ''], // Empty row for separation
+                ['SL.NO', 'A', 'B', 'C', 'D', 'Most', 'Least'] // Column headers
+            ];
+            XLSX.utils.sheet_add_aoa(ws, formData);
+
+            var tableData = XLSX.utils.table_to_sheet(document.getElementById('datatable'));
+            XLSX.utils.sheet_add_json(ws, XLSX.utils.sheet_to_json(tableData), { origin: -1, skipHeader: true });
+
+
+
+            // Append worksheet to workbook
+            XLSX.utils.book_append_sheet(wb, ws, 'Psychometric');
+
+            // Save workbook to a file
+            XLSX.writeFile(wb, 'Psychometric_data.xlsx');
+        });
+    </script>
+
+</body>
+</html>

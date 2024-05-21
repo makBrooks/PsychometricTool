@@ -1,0 +1,295 @@
+﻿
+@{ Layout = "~/Views/Shared/_Layout.cshtml";}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="card">
+        <div class="card-header text-center">
+            <h2>User Registration </h2>
+        </div>
+        <div class="container">
+            <div class="row col-md-12" style="margin-top:10px;">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="fullName">Full Name<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="fullName" placeholder="Enter full name" required autocomplete="off">
+                        <div id="fullName" class="invalid-feedback">
+                            Please Enter Your Name.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="userName">User Name</label>
+                        <input type="text" class="form-control" id="userName" placeholder="Enter username" required autocomplete="off">
+                        <div id="userName" class="invalid-feedback">
+                            Please Enter User Name.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="password">Password<span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                        <div id="password" class="invalid-feedback">
+                            Please Enter Password.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row col-md-12">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="cpassword">Conform Password<span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="cpassword" placeholder="Enter password" required>
+                        <div id="cpassword" class="invalid-feedback">
+                            Please Enter Conform Password.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number<span class="text-danger">*</span></label>
+                        <input type="text" maxlength="10" id="mobile" name="mobile" class="form-control" placeholder="Enter mobile number" required>
+
+                        <div id="mobileno" class="invalid-feedback">
+                            Please Enter Valid Mobile Number.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1" id="getotp" style="display:none;">
+                    <div class="form-group">
+                        <label></label>
+                        <input type="submit" class="btn btn-primary me-2" id="btnGetOtp" value="verify">
+                    </div>
+                </div>
+                <div class="col-md-3" id="otp" style="display:none;">
+                    <div class="form-group">
+                        <label for="otp">OTP<span class="text-danger">*</span></label>
+                        <input type="text" maxlength="4" id="otp" class="form-control" required>
+                        <div id="otp" class="invalid-feedback">
+                            Please Enter Valid otp.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1" id="verify" style="display:none;">
+                    <div class="form-group">
+                        <label></label>
+                        <input type="submit" class="btn btn-primary me-2" id="btnVerify" value="verify">
+                    </div>
+                </div>
+                <div class="col-md-1" id="tickMarkContainer" style="display: none;">
+                    <span class="tick-mark">✔️</span>
+                </div>
+            </div>
+
+            <div class="row col-md-12">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="email">Email<span class="text-danger">*</span></label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter email" required>
+
+                        <div id="emailid" class="invalid-feedback">
+                            Please Enter Valid e-Mail Address.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="adharNumber">Aadhaar No.<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="adharNumber" maxlength="12" placeholder="Enter aadhaar number" required>
+                        <div id="adharNumber" class="invalid-feedback">
+                            Please Enter Aadhaar Number.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="adharUpload">Upload Aadhaar<span class="text-danger">*</span></label>
+                        <input type="file" class="form-control" id="adharUpload" accept="image/*" required>
+                        <div id="adharUpload" class="invalid-feedback">
+                            Please Upload Your Aadhaar Image.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class=" col-md-2 offset-md-4 ">
+                <input type="submit" class="btn btn-success btn-block" id="btnSubmit" value="Submit">
+            </div>
+            <div class=" col-md-2">
+                <input type="reset" class="btn btn-danger btn-block" value="Cancel">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+           
+        });
+        $('#mobile').focus(function () {
+            $('#getotp').show();
+        });
+        $('#btnSubmit').click(function () {
+            var isValid = true;
+            if (!$('#tickMarkContainer').show()) {
+                alert('please verify the mobile number first.');
+                return false;
+            }
+            // Clear previous error messages
+            $('.invalid-feedback').hide();
+
+            // Validate Full Name
+            var fullName = $('#fullName').val().trim();
+            if (fullName === '') {
+                $('#fullName').next('.invalid-feedback').show();
+                isValid = false;
+            }
+
+            // Validate User Name
+            var userName = $('#userName').val().trim();
+            if (userName === '') {
+                $('#userName').next('.invalid-feedback').show();
+                isValid = false;
+            }
+
+            // Validate Password
+            var password = $('#password').val().trim();
+            if (password === '') {
+                $('#password').next('.invalid-feedback').show();
+                isValid = false;
+            }
+            //validate conform password
+            var cpassword = $('#cpassword').val().trim();
+            if (cpassword === password) {
+                $('#cpassword').val('');
+                $('#cpassword').show();
+                $('#password').next('.invalid-feedback').show();
+                isValid = false;
+            }
+
+            // Validate Email
+            var email = $('#email').val().trim();
+            var emailPattern = /^[a-zA-Z0-9_.+-]+@@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+            if (email === '' || !emailPattern.test(email)) {
+                $('#email').next('.invalid-feedback').show();
+                isValid = false;
+            }
+
+            // Validate Mobile Number
+            var mobile = $('#mobile').val().trim();
+            var mobilePattern = /^[0-9]{10}$/;
+            if (mobile === '' || !mobilePattern.test(mobile)) {
+                $('#mobile').next('.invalid-feedback').show();
+                isValid = false;
+            }
+
+            // Validate Aadhar Number
+            var adharNumber = $('#adharNumber').val().trim();
+            var adharPattern = /^\d{12}$/;
+            if (adharNumber === '' || !adharPattern.test(adharNumber)) {
+                $('#adharNumber').next('.invalid-feedback').show();
+                isValid = false;
+            }
+
+            // Validate Aadhar Upload
+            var adharUpload = $('#adharUpload')[0].files[0];
+            if (!adharUpload) {
+                $('#adharUpload').next('.invalid-feedback').show();
+                isValid = false;
+            }
+
+            // If all fields are valid, proceed with the AJAX request
+            if (isValid) {
+                
+                var formData = new FormData();
+                formData.append('FULLNAME', fullName);
+                formData.append('UNAME', userName);
+                formData.append('PASSWORD', password);
+                formData.append('EMAIL', email);
+                formData.append('PHONE', mobile);
+                formData.append('ADHARNUMBER', adharNumber);
+                formData.append('ADHARUPLOAD', adharUpload);
+                $.ajax({
+                    url: '/Home/UserRegistration',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,  // prevent jQuery from converting the data
+                    contentType: false,  // prevent jQuery from setting the content-type
+                    success: function (response) {
+                        alert('Registration successful');
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Registration failed: ' + xhr.responseText);
+                    }
+                });
+            }
+            //else {
+            //    alert('Please fill out all required fields correctly.');
+            //}
+        });
+
+        $('#resetBtn').click(function () {
+            // Clear all input fields and error messages
+            $('#fullName').val('');
+            $('#userName').val('');
+            $('#password').val('');
+            $('#email').val('');
+            $('#mobile').val('');
+            $('#adharNumber').val('');
+            $('#adharUpload').val('');
+            $('.invalid-feedback').hide();
+        });
+        $('#btnGetOtp').click(function () {
+            var mobile = $('#mobile').val().trim();
+            var mobilePattern = /^[0-9]{10}$/;
+            if (mobile && mobilePattern.test(mobile)) {
+                // Simulate sending OTP
+                alert('OTP sent to ' + mobile);
+
+                // Hide "Get OTP" button and show OTP input and Verify button
+                $('#getotp').hide();
+                $('#otp').show();
+                $('#verify').show();
+            } else {
+                alert('Please enter a valid mobile number.');
+            }
+        });
+
+        // Handle the "Verify" button click event
+        $('#btnVerify').click(function () {
+            var otp = $('#otp input').val().trim();
+            if (otp === '1234') { // Assuming 1234 is the correct OTP for demo purposes
+                alert('Mobile number verified successfully');
+
+                // Show a tick mark inside the mobile textbox
+                $('#mobile').addClass('is-valid');
+                $('#mobile').after('<span class="tick-mark">✔️</span>');
+
+                // Hide the OTP input and Verify button
+                $('#otp').hide();
+                $('#verify').hide();
+            } else {
+                alert('Invalid OTP. Please try again.');
+            }
+        });
+    </script>
+</body>
+
+
+</html>

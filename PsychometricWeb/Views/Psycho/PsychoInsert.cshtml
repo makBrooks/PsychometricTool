@@ -1,0 +1,767 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form with Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <!--<h2 class="h2" style="text-align:center;">Personal Information</h2>
+    
+    <div class="row col-md-12" style="margin-top:10px;">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="fname">First Name:<span class="text-danger">*</span></label>
+                <input type="text" id="fname" name="fname" class="form-control" required autocomplete="off">
+
+                <div id="first" class="invalid-feedback">
+                    Please Enter First Name.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="mname">Middle Name:</label>
+                <input type="text" id="mname" name="mname" class="form-control" autocomplete="off">-->
+
+                @*<div id="second" class="invalid-feedback">
+                        Please Enter Middle Name.
+                    </div>*@
+            <!--</div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="lname">Last Name:<span class="text-danger">*</span></label>
+                <input type="text" id="lname" name="lname" class="form-control" required autocomplete="off">
+
+                <div id="third" class="invalid-feedback">
+                    Please Enter Last Name.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="email">Email:<span class="text-danger">*</span></label>
+                <input type="email" id="email" name="email" class="form-control" required>
+
+                <div id="emailid" class="invalid-feedback">
+                    Please Enter Valid e-Mail Address.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="mobile">Mobile Number:<span class="text-danger">*</span></label>
+                <input type="text" maxlength="10" id="mobile" name="mobile" class="form-control" required>
+
+                <div id="mobileno" class="invalid-feedback">
+                    Please Enter Valid Mobile Number.
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <h2 class="h2" style="text-align:center;">Psychometric Test</h2>
+    <table id="myTable" class="table table-bordered">
+        <thead class="card-header card-header-tabs">
+            <tr>
+                <th>Sl. No</th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>Most</th>
+                <th>Least</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td><label class="a-input">Gentle</label></td>
+                <td><label class="b-input">Persuasive</label></td>
+                <td><label class="c-input">Careful</label></td>
+                <td><label class="d-input">Intense</label></td>
+                <td>
+                    <input type="radio" name="most-input1" value="A" class="most-input">A
+                    <input type="radio" name="most-input1" value="B" class="most-input">B
+                    <input type="radio" name="most-input1" value="C" class="most-input">C
+                    <input type="radio" name="most-input1" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input1" value="A" class="least-input">A
+                    <input type="radio" name="least-input1" value="B" class="least-input">B
+                    <input type="radio" name="least-input1" value="C" class="least-input">C
+                    <input type="radio" name="least-input1" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><label class="a-input">Attractive</label></td>
+                <td><label class="b-input">Co-operative</label></td>
+                <td><label class="c-input">Stubborn</label></td>
+                <td><label class="d-input">Logical</label></td>
+                <td>
+                    <input type="radio" name="most-input2" value="A" class="most-input">A
+                    <input type="radio" name="most-input2" value="B" class="most-input">B
+                    <input type="radio" name="most-input2" value="C" class="most-input">C
+                    <input type="radio" name="most-input2" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input2" value="A" class="least-input">A
+                    <input type="radio" name="least-input2" value="B" class="least-input">B
+                    <input type="radio" name="least-input2" value="C" class="least-input">C
+                    <input type="radio" name="least-input2" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><label class="a-input">Compliant</label></td>
+                <td><label class="b-input">Bold</label></td>
+                <td><label class="c-input">Loyal</label></td>
+                <td><label class="d-input">Charming</label></td>
+                <td>
+                    <input type="radio" name="most-input3" value="A" class="most-input">A
+                    <input type="radio" name="most-input3" value="B" class="most-input">B
+                    <input type="radio" name="most-input3" value="C" class="most-input">C
+                    <input type="radio" name="most-input3" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input3" value="A" class="least-input">A
+                    <input type="radio" name="least-input3" value="B" class="least-input">B
+                    <input type="radio" name="least-input3" value="C" class="least-input">C
+                    <input type="radio" name="least-input3" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><label class="a-input">Private</label></td>
+                <td><label class="b-input">Obliging</label></td>
+                <td><label class="c-input">Determined</label></td>
+                <td><label class="d-input">Cheerful</label></td>
+                <td>
+                    <input type="radio" name="most-input4" value="A" class="most-input">A
+                    <input type="radio" name="most-input4" value="B" class="most-input">B
+                    <input type="radio" name="most-input4" value="C" class="most-input">C
+                    <input type="radio" name="most-input4" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input4" value="A" class="least-input">A
+                    <input type="radio" name="least-input4" value="B" class="least-input">B
+                    <input type="radio" name="least-input4" value="C" class="least-input">C
+                    <input type="radio" name="least-input4" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><label class="a-input">Jovial</label></td>
+                <td><label class="b-input">Precise</label></td>
+                <td><label class="c-input">Fierce</label></td>
+                <td><label class="d-input">Friendly</label></td>
+                <td>
+                    <input type="radio" name="most-input5" value="A" class="most-input">A
+                    <input type="radio" name="most-input5" value="B" class="most-input">B
+                    <input type="radio" name="most-input5" value="C" class="most-input">C
+                    <input type="radio" name="most-input5" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input5" value="A" class="least-input">A
+                    <input type="radio" name="least-input5" value="B" class="least-input">B
+                    <input type="radio" name="least-input5" value="C" class="least-input">C
+                    <input type="radio" name="least-input5" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td><label class="a-input">Competitive</label></td>
+                <td><label class="b-input">Considerate</label></td>
+                <td><label class="c-input">Principled</label></td>
+                <td><label class="d-input">Outgoing</label></td>
+                <td>
+                    <input type="radio" name="most-input6" value="A" class="most-input">A
+                    <input type="radio" name="most-input6" value="B" class="most-input">B
+                    <input type="radio" name="most-input6" value="C" class="most-input">C
+                    <input type="radio" name="most-input6" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input6" value="A" class="least-input">A
+                    <input type="radio" name="least-input6" value="B" class="least-input">B
+                    <input type="radio" name="least-input6" value="C" class="least-input">C
+                    <input type="radio" name="least-input6" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td><label class="a-input">Expressive</label></td>
+                <td><label class="b-input">Obedient</label></td>
+                <td><label class="c-input">Domineering</label></td>
+                <td><label class="d-input">Perfection</label></td>
+                <td>
+                    <input type="radio" name="most-input7" value="A" class="most-input">A
+                    <input type="radio" name="most-input7" value="B" class="most-input">B
+                    <input type="radio" name="most-input7" value="C" class="most-input">C
+                    <input type="radio" name="most-input7" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input7" value="A" class="least-input">A
+                    <input type="radio" name="least-input7" value="B" class="least-input">B
+                    <input type="radio" name="least-input7" value="C" class="least-input">C
+                    <input type="radio" name="least-input7" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td><label class="a-input">Courageous</label></td>
+                <td><label class="b-input">Inspiring</label></td>
+                <td><label class="c-input">Submissive</label></td>
+                <td><label class="d-input">Timid</label></td>
+                <td>
+                    <input type="radio" name="most-input8" value="A" class="most-input">A
+                    <input type="radio" name="most-input8" value="B" class="most-input">B
+                    <input type="radio" name="most-input8" value="C" class="most-input">C
+                    <input type="radio" name="most-input8" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input8" value="A" class="least-input">A
+                    <input type="radio" name="least-input8" value="B" class="least-input">B
+                    <input type="radio" name="least-input8" value="C" class="least-input">C
+                    <input type="radio" name="least-input8" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td><label class="a-input">Sociable</label></td>
+                <td><label class="b-input">Tolerant</label></td>
+                <td><label class="c-input">Self-reliant</label></td>
+                <td><label class="d-input">Soft-spoken</label></td>
+                <td>
+                    <input type="radio" name="most-input9" value="A" class="most-input">A
+                    <input type="radio" name="most-input9" value="B" class="most-input">B
+                    <input type="radio" name="most-input9" value="C" class="most-input">C
+                    <input type="radio" name="most-input9" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input9" value="A" class="least-input">A
+                    <input type="radio" name="least-input9" value="B" class="least-input">B
+                    <input type="radio" name="least-input9" value="C" class="least-input">C
+                    <input type="radio" name="least-input9" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td><label class="a-input">Adventurous</label></td>
+                <td><label class="b-input">Receptive</label></td>
+                <td><label class="c-input">Cordial</label></td>
+                <td><label class="d-input">Thorough</label></td>
+                <td>
+                    <input type="radio" name="most-input10" value="A" class="most-input">A
+                    <input type="radio" name="most-input10" value="B" class="most-input">B
+                    <input type="radio" name="most-input10" value="C" class="most-input">C
+                    <input type="radio" name="most-input10" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input10" value="A" class="least-input">A
+                    <input type="radio" name="least-input10" value="B" class="least-input">B
+                    <input type="radio" name="least-input10" value="C" class="least-input">C
+                    <input type="radio" name="least-input10" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td><label class="a-input">Talkative</label></td>
+                <td><label class="b-input">Controlled</label></td>
+                <td><label class="c-input">Conventional</label></td>
+                <td><label class="d-input">Decisive</label></td>
+                <td>
+                    <input type="radio" name="most-input11" value="A" class="most-input">A
+                    <input type="radio" name="most-input11" value="B" class="most-input">B
+                    <input type="radio" name="most-input11" value="C" class="most-input">C
+                    <input type="radio" name="most-input11" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input11" value="A" class="least-input">A
+                    <input type="radio" name="least-input11" value="B" class="least-input">B
+                    <input type="radio" name="least-input11" value="C" class="least-input">C
+                    <input type="radio" name="least-input11" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td><label class="a-input">Polished</label></td>
+                <td><label class="b-input">Impatient</label></td>
+                <td><label class="c-input">Diplomatic</label></td>
+                <td><label class="d-input">Contented</label></td>
+                <td>
+                    <input type="radio" name="most-input12" value="A" class="most-input">A
+                    <input type="radio" name="most-input12" value="B" class="most-input">B
+                    <input type="radio" name="most-input12" value="C" class="most-input">C
+                    <input type="radio" name="most-input12" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input12" value="A" class="least-input">A
+                    <input type="radio" name="least-input12" value="B" class="least-input">B
+                    <input type="radio" name="least-input12" value="C" class="least-input">C
+                    <input type="radio" name="least-input12" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td><label class="a-input">Aggressive</label></td>
+                <td><label class="b-input">Charismatic</label></td>
+                <td><label class="c-input">Helpful</label></td>
+                <td><label class="d-input">Fearful</label></td>
+                <td>
+                    <input type="radio" name="most-input13" value="A" class="most-input">A
+                    <input type="radio" name="most-input13" value="B" class="most-input">B
+                    <input type="radio" name="most-input13" value="C" class="most-input">C
+                    <input type="radio" name="most-input13" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input13" value="A" class="least-input">A
+                    <input type="radio" name="least-input13" value="B" class="least-input">B
+                    <input type="radio" name="least-input13" value="C" class="least-input">C
+                    <input type="radio" name="least-input13" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td><label class="a-input">Cautious</label></td>
+                <td><label class="b-input">Obstinate</label></td>
+                <td><label class="c-input">Influential</label></td>
+                <td><label class="d-input">Benevolent</label></td>
+                <td>
+                    <input type="radio" name="most-input14" value="A" class="most-input">A
+                    <input type="radio" name="most-input14" value="B" class="most-input">B
+                    <input type="radio" name="most-input14" value="C" class="most-input">C
+                    <input type="radio" name="most-input14" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input14" value="A" class="least-input">A
+                    <input type="radio" name="least-input14" value="B" class="least-input">B
+                    <input type="radio" name="least-input14" value="C" class="least-input">C
+                    <input type="radio" name="least-input14" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td><label class="a-input">Willing</label></td>
+                <td><label class="b-input">Resolute</label></td>
+                <td><label class="c-input">Tactful</label></td>
+                <td><label class="d-input">High-spirited</label></td>
+                <td>
+                    <input type="radio" name="most-input15" value="A" class="most-input">A
+                    <input type="radio" name="most-input15" value="B" class="most-input">B
+                    <input type="radio" name="most-input15" value="C" class="most-input">C
+                    <input type="radio" name="most-input15" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input15" value="A" class="least-input">A
+                    <input type="radio" name="least-input15" value="B" class="least-input">B
+                    <input type="radio" name="least-input15" value="C" class="least-input">C
+                    <input type="radio" name="least-input15" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td><label class="a-input">Optimistic</label></td>
+                <td><label class="b-input">Observant</label></td>
+                <td><label class="c-input">Patient</label></td>
+                <td><label class="d-input">Demanding</label></td>
+                <td>
+                    <input type="radio" name="most-input16" value="A" class="most-input">A
+                    <input type="radio" name="most-input16" value="B" class="most-input">B
+                    <input type="radio" name="most-input16" value="C" class="most-input">C
+                    <input type="radio" name="most-input16" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input16" value="A" class="least-input">A
+                    <input type="radio" name="least-input16" value="B" class="least-input">B
+                    <input type="radio" name="least-input16" value="C" class="least-input">C
+                    <input type="radio" name="least-input16" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td><label class="a-input">Disciplined</label></td>
+                <td><label class="b-input">Forgiving</label></td>
+                <td><label class="c-input">Animated</label></td>
+                <td><label class="d-input">Persistent</label></td>
+                <td>
+                    <input type="radio" name="most-input17" value="A" class="most-input">A
+                    <input type="radio" name="most-input17" value="B" class="most-input">B
+                    <input type="radio" name="most-input17" value="C" class="most-input">C
+                    <input type="radio" name="most-input17" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input17" value="A" class="least-input">A
+                    <input type="radio" name="least-input17" value="B" class="least-input">B
+                    <input type="radio" name="least-input17" value="C" class="least-input">C
+                    <input type="radio" name="least-input17" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td><label class="a-input">Admirable</label></td>
+                <td><label class="b-input">Kind</label></td>
+                <td><label class="c-input">Quiet</label></td>
+                <td><label class="d-input">Forceful</label></td>
+                <td>
+                    <input type="radio" name="most-input18" value="A" class="most-input">A
+                    <input type="radio" name="most-input18" value="B" class="most-input">B
+                    <input type="radio" name="most-input18" value="C" class="most-input">C
+                    <input type="radio" name="most-input18" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input18" value="A" class="least-input">A
+                    <input type="radio" name="least-input18" value="B" class="least-input">B
+                    <input type="radio" name="least-input18" value="C" class="least-input">C
+                    <input type="radio" name="least-input18" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td><label class="a-input">Respectful</label></td>
+                <td><label class="b-input">Pioneering</label></td>
+                <td><label class="c-input">Confident</label></td>
+                <td><label class="d-input">Unselfish</label></td>
+                <td>
+                    <input type="radio" name="most-input19" value="A" class="most-input">A
+                    <input type="radio" name="most-input19" value="B" class="most-input">B
+                    <input type="radio" name="most-input19" value="C" class="most-input">C
+                    <input type="radio" name="most-input19" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input19" value="A" class="least-input">A
+                    <input type="radio" name="least-input19" value="B" class="least-input">B
+                    <input type="radio" name="least-input19" value="C" class="least-input">C
+                    <input type="radio" name="least-input19" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td><label class="a-input">Argumentative</label></td>
+                <td><label class="b-input">Detailed</label></td>
+                <td><label class="c-input">Adaptable</label></td>
+                <td><label class="d-input">Light-hearted</label></td>
+                <td>
+                    <input type="radio" name="most-input20" value="A" class="most-input">A
+                    <input type="radio" name="most-input20" value="B" class="most-input">B
+                    <input type="radio" name="most-input20" value="C" class="most-input">C
+                    <input type="radio" name="most-input20" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input20" value="A" class="least-input">A
+                    <input type="radio" name="least-input20" value="B" class="least-input">B
+                    <input type="radio" name="least-input20" value="C" class="least-input">C
+                    <input type="radio" name="least-input20" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td><label class="a-input">Trusting</label></td>
+                <td><label class="b-input">Satisfied</label></td>
+                <td><label class="c-input">Daring</label></td>
+                <td><label class="d-input">Fair</label></td>
+                <td>
+                    <input type="radio" name="most-input21" value="A" class="most-input">A
+                    <input type="radio" name="most-input21" value="B" class="most-input">B
+                    <input type="radio" name="most-input21" value="C" class="most-input">C
+                    <input type="radio" name="most-input21" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input21" value="A" class="least-input">A
+                    <input type="radio" name="least-input21" value="B" class="least-input">B
+                    <input type="radio" name="least-input21" value="C" class="least-input">C
+                    <input type="radio" name="least-input21" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>22</td>
+                <td><label class="a-input">Likeable</label></td>
+                <td><label class="b-input">Cultured</label></td>
+                <td><label class="c-input">Vigorous</label></td>
+                <td><label class="d-input">Lenient</label></td>
+                <td>
+                    <input type="radio" name="most-input22" value="A" class="most-input">A
+                    <input type="radio" name="most-input22" value="B" class="most-input">B
+                    <input type="radio" name="most-input22" value="C" class="most-input">C
+                    <input type="radio" name="most-input22" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input22" value="A" class="least-input">A
+                    <input type="radio" name="least-input22" value="B" class="least-input">B
+                    <input type="radio" name="least-input22" value="C" class="least-input">C
+                    <input type="radio" name="least-input22" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>23</td>
+                <td><label class="a-input">Companionable</label></td>
+                <td><label class="b-input">Amiable</label></td>
+                <td><label class="c-input">Outspoken</label></td>
+                <td><label class="d-input">Accurate</label></td>
+                <td>
+                    <input type="radio" name="most-input23" value="A" class="most-input">A
+                    <input type="radio" name="most-input23" value="B" class="most-input">B
+                    <input type="radio" name="most-input23" value="C" class="most-input">C
+                    <input type="radio" name="most-input23" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input23" value="A" class="least-input">A
+                    <input type="radio" name="least-input23" value="B" class="least-input">B
+                    <input type="radio" name="least-input23" value="C" class="least-input">C
+                    <input type="radio" name="least-input23" value="D" class="least-input">D
+                </td>
+            </tr>
+            <tr>
+                <td>24</td>
+                <td><label class="a-input">Restless</label></td>
+                <td><label class="b-input">Neighborly</label></td>
+                <td><label class="c-input">Popular</label></td>
+                <td><label class="d-input">Systematic</label></td>
+                <td>
+                    <input type="radio" name="most-input24" value="A" class="most-input">A
+                    <input type="radio" name="most-input24" value="B" class="most-input">B
+                    <input type="radio" name="most-input24" value="C" class="most-input">C
+                    <input type="radio" name="most-input24" value="D" class="most-input">D
+                </td>
+                <td>
+                    <input type="radio" name="least-input24" value="A" class="least-input">A
+                    <input type="radio" name="least-input24" value="B" class="least-input">B
+                    <input type="radio" name="least-input24" value="C" class="least-input">C
+                    <input type="radio" name="least-input24" value="D" class="least-input">D
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="text-center">
+            <button type="button" class="btn btn-success" style="" id="btnSubmit">Submit</button>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $("#btnSubmit").on("click", function (e) {
+            /*if (validateForm()) {*/
+                var fullname = "";
+                //if ($('#mname').val() != "") {
+                //    fullname = $('#fname').val() + " " + $('#mname').val() + " " + $('#lname').val();
+                //}
+                //else {
+                //    fullname = $('#fname').val() + " " + $('#lname').val();
+                //}
+                var formData = {
+                    //Name: fullname,
+                    //Email: $('#email').val(),
+                    //Phone: $('#mobile').val(),
+                    A: [],
+                    B: [],
+                    C: [],
+                    D: [],
+                    Most: [],
+                    Least: []
+                };
+
+                var isValid = true; // Initialize to true
+                var isblank = true; // Initialize to true
+                var x = 1;
+                var rows = $('#myTable tbody tr');
+                rows.each(function (index, row) {
+                    var mostInput = $('input[name="most-input' + x + '"]:checked').val();
+                    var leastInput = $('input[name="least-input' + x + '"]:checked').val();
+                    if (typeof mostInput === 'undefined') {
+                        isValid = false;
+                        // Highlight the row with missing input
+                        $(this).css("background-color", "#ffcccc");
+                        $(this).find('input[type="radio"]:not(:checked):enabled').first().focus();
+                        isblank = true;
+                        return false; // Exit the loop
+                    }
+                    else if (typeof leastInput === 'undefined') {
+                        isValid = false;
+                        // Highlight the row with missing input
+                        $(this).css("background-color", "#ffcccc");
+                        $(this).find('input[type="radio"]:not(:checked):enabled').first().focus();
+                        isblank = true;
+                        return false; // Exit the loop
+                    }
+                    else {
+                        // Remove any previous highlighting
+                        $(this).css("background-color", "");
+                    }
+                    if (mostInput !== "" && leastInput !== "") {
+                        formData.A.push($(row).find('.a-input').text());
+                        formData.B.push($(row).find('.b-input').text());
+                        formData.C.push($(row).find('.c-input').text());
+                        formData.D.push($(row).find('.d-input').text());
+                        formData.Most.push(mostInput);
+                        formData.Least.push(leastInput);
+                        isblank = false; // At least one non-blank field found
+                    }
+                    x++;
+                });
+
+                if (!isValid) {
+                    //alert('Please select fields!');
+                    Swal.fire({
+                        title: '',
+                        text: 'All the questions are mandatory..!',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    });
+                }
+
+                else {
+                    $.ajax({
+                        url: '/Psycho/PsychoInsert',
+                        type: 'POST',
+                        data: formData, // No need for JSON.stringify if contentType is not set
+                        success: function (response) {
+                            if (response == 1) {
+
+                                Swal.fire({
+                                    title: '',
+                                    text: 'Test Submitted Successfully...',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK',
+                                    //cancelButtonText: 'No, cancel',
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        // Redirect the user to another page
+                                        var url = '/Psycho/Start';
+                                        window.location.href = url;
+                                    }
+                                });
+                                //alert('Thanks For The Submitting The Test!');
+
+                            } else {
+                                Swal.fire({
+                                    title: '',
+                                    text: 'Error: ' + response,
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });// Provide more specific error message
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            Swal.fire({
+                                title: '',
+                                text: 'Error: ' + error,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            }); // Display error message
+                        }
+                    });
+                }
+
+            //}
+        });
+    </script>
+    <script>
+        function validateForm() {
+            var fname = document.getElementById("fname").value;
+            var mname = document.getElementById("mname").value;
+            var lname = document.getElementById("lname").value;
+            var email = document.getElementById("email").value;
+            var mobile = document.getElementById("mobile").value;
+
+            var isValid = true;
+
+            // Validation for First Name
+            if (fname.trim() === "") {
+                document.getElementById("first").style.display = "block";
+                $("#fname").focus();
+                isValid = false;
+                return false;
+            } else {
+                document.getElementById("first").style.display = "none";
+            }
+
+
+            // Validation for Last Name
+            if (lname.trim() === "") {
+                document.getElementById("third").style.display = "block";
+                $("#lname").focus();
+                isValid = false;
+                return false;
+            } else {
+                document.getElementById("third").style.display = "none";
+            }
+
+            // Validation for Email
+            var emailPattern = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+            if (!emailPattern.test(email)) {
+                document.getElementById("emailid").style.display = "block";
+                $("#email").focus();
+                isValid = false;
+                return false;
+            } else {
+                document.getElementById("emailid").style.display = "none";
+            }
+
+            // Validation for Mobile Number
+            var mobilePattern = /^[6-9][0-9]{9}$/;;
+            if (!mobilePattern.test(mobile)) {
+                document.getElementById("mobileno").style.display = "block";
+                $("#mobile").focus();
+                isValid = false;
+                return false;
+            } else {
+                document.getElementById("mobileno").style.display = "none";
+            }
+
+            if (isValid) {
+                return true;
+                // Here you can submit the form to the server or perform any other action
+            }
+        }
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Function to disable the corresponding radio button
+            function disableRadioButtons(inputName, value) {
+                $(`input[name^='${inputName}']`).each(function () {
+                    if ($(this).val() === value) {
+                        $(this).prop('disabled', true);
+                    } else {
+                        $(this).prop('disabled', false);
+                    }
+                });
+            }
+
+            // Event listener for most-input radio buttons
+            $('input.most-input').on('change', function () {
+                var value = $(this).val();
+                var name = $(this).attr('name').replace('most-input', 'least-input');
+                disableRadioButtons(name, value);
+            });
+
+            // Event listener for least-input radio buttons
+            $('input.least-input').on('change', function () {
+                var value = $(this).val();
+                var name = $(this).attr('name').replace('least-input', 'most-input');
+                disableRadioButtons(name, value);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+       * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/*body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #7d2ae8;
+  padding: 30px;
+}*/
+
+.cont {
+  position: relative;
+  max-width: 850px;
+  width: 100%;
+  background: #fff;
+  padding: 40px 30px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  perspective: 1500px; /* Adjusted perspective */
+}
+
+        .cont .cover {
+            position: absolute;
+            top: 0;
+            left: 0; /* Adjusted left position */
+            height: 100%;
+            width: 100%; /* Adjusted width */
+            transition: transform 1s ease;
+            transform-style: preserve-3d;
+        }
+
+        .cont #flip:checked ~ .cover {
+            transform: rotateY(-180deg);
+        }
+
+        .cont .cover .front,
+        .cont .cover .back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+.cover .back {
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+}
+
+        .cont .cover::before,
+        .cont .cover::after {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: #d9d9d9;
+            opacity: 0.5;
+            z-index: 12;
+        }
+
+        .cont .cover::after {
+            opacity: 0.3;
+            transform: rotateY(180deg);
+            backface-visibility: hidden;
+        }
+
+        .cont .cover img {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            z-index: 10;
+        }
+
+        .cont .cover .text {
+            position: absolute;
+            z-index: 130;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+.cover .text .text-1,
+.cover .text .text-2 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+}
+
+.cover .text .text-2 {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+        .cont .forms {
+            height: 100%;
+            width: 100%;
+            background: #fff;
+        }
+
+        .cont .form-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+.form-content .login-form,
+.form-content .signup-form {
+  width: 45%; /* Adjusted width */
+}
+
+.forms .form-content .title {
+  position: relative;
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+}
+
+.forms .form-content .title:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 25px;
+  background: #7d2ae8;
+}
+
+.forms .signup-form .title:before {
+  width: 20px;
+}
+
+.forms .form-content .input-boxes {
+  margin-top: 30px;
+}
+
+.forms .form-content .input-box {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  margin: 10px 0;
+  position: relative;
+}
+
+.form-content .input-box input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  padding: 0 30px;
+  font-size: 16px;
+  font-weight: 500;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.form-content .input-box input:focus,
+.form-content .input-box input:valid {
+  border-color: #7d2ae8;
+}
+
+.form-content .input-box i {
+  position: absolute;
+  color: #7d2ae8;
+  font-size: 17px;
+}
+
+.forms .form-content .text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.forms .form-content .text a {
+  text-decoration: none;
+}
+
+.forms .form-content .text a:hover {
+  text-decoration: underline;
+}
+
+.forms .form-content .button {
+  color: #fff;
+  margin-top: 40px;
+}
+
+.forms .form-content .button input {
+  color: #fff;
+  background: #7d2ae8;
+  border-radius: 6px;
+  padding: 10px 20px;  
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <form class="container cont" id="loginForm">
+
+        <div class="cover">
+            <div class="front">
+                @*<img src="~/assets/dist/img/images.png" />*@
+
+            </div>
+
+        </div>
+        <div class="forms">
+            <div class="form-content">
+                <div class="login-form">
+                    <img  src="~/assets/dist/img/images (2).png" />
+                </div>
+                <div class="login-form">
+                    <div class="title">Login</div>
+                    <div class="input-boxes">
+                        <div class="input-box">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text" style="background: transparent;" id="UserUsername" placeholder="Enter User Name" required>
+                        </div>
+                        <div class="input-box">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" style="background: transparent;" id="UserPassword" placeholder="Enter Password" required>
+                        </div>
+
+                        <div class="button input-box">
+                            <input type="submit" value="Sign in">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#loginForm").submit(function (event) {
+                event.preventDefault();
+
+                var login = {
+                    userName: $("#UserUsername").val(),
+                    Password: $("#UserPassword").val(),
+                };
+
+                $.ajax({
+                    url: "/Psycho/Login",
+                    data: login,
+                    type: "POST",
+                    success: function (result) {
+                        var data = JSON.parse(result);
+                        if (data.statuscode == 200) {
+                            Swal.fire({
+                                title: 'Login Successful',
+                                text: data.msg,
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Redirect the user to another page
+                                    var url = '/Psycho/ManageUser';
+                                    window.location.href = url;
+                                }
+                            });
+                            
+                        } else if (data.statuscode == 404) {
+                            
+                            Swal.fire({
+                                title: '',
+                                text: data.msg,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        } else {
+                           
+                            Swal.fire({
+                                title: '',
+                                text: data.msg,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    },
+                    error: function (errormessage) {
+                        
+                        Swal.fire({
+                            title: '',
+                            text: errormessage.responseText,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
