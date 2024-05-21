@@ -38,12 +38,27 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="password">Password<span class="text-danger">*</span></label>
-                        <input type="password" class="form-control" id="password" placeholder="Enter password" required>
-                        <div id="password" class="invalid-feedback">
-                            Please Enter Password.
+                        <a id="passwordInfo" data-toggle="tooltip" data-placement="right" title="Password must be at least 6 characters long, include an uppercase letter, a lowercase letter, a number, and a special character.">
+                            <i class="fa fa-info-circle"></i>
+                        </a>
+                      <div class="input-group">
+                            <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                            @* <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="fa fa-eye" id="togglePassword" style="cursor: pointer;"></i>
+                                </span> 
+                            </div>  *@
+                      </div>
+                        <div id="passwordEmpty" class="invalid-feedback">
+                            Please enter a password.
+                        </div>
+                        <div id="passwordInvalid" class="invalid-feedback">
+                            Please Enter Valid Password like - Ab#123.
                         </div>
                     </div>
+                    
                 </div>
+                    
             </div>
 
             <div class="row col-md-12">
@@ -106,9 +121,12 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="adharNumber">Aadhaar No.<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="adharNumber" maxlength="12" placeholder="Enter aadhaar number" required>
-                        <div id="adharNumber" class="invalid-feedback">
-                            Please Enter Aadhaar Number.
+                        <input type="text" class="form-control" id="adharNumber" maxlength="12" placeholder="Enter Aadhaar number" required>
+                        <div id="invalidAadhaar" class="invalid-feedback">
+                            Please enter Aadhaar Number.
+                        </div>
+                        <div id="invalidAadhaarLength" class="invalid-feedback">
+                            Aadhaar number must be exactly 12 digits.
                         </div>
                     </div>
                 </div>
@@ -126,12 +144,14 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class=" col-md-2 offset-md-4 ">
-                <input type="submit" class="btn btn-success btn-block" id="btnSubmit" value="Submit">
-            </div>
-            <div class=" col-md-2">
-                <input type="reset" class="btn btn-danger btn-block" value="Cancel">
+        <div class="">
+            <div class="row">
+                <div class=" col-md-2 offset-md-4 ">
+                    <input type="submit" class="btn btn-success btn-block" id="btnSubmit" value="Submit">
+                </div>
+                <div class=" col-md-2">
+                    <input type="reset" class="btn btn-danger btn-block" id="resetBtn" value="Cancel">
+                </div>
             </div>
         </div>
     </div>
@@ -144,6 +164,7 @@
         });
         $('#mobile').focus(function () {
             $('#getotp').show();
+            $('#tickMarkContainer').hide();
         });
         $('#btnSubmit').click(function () {
             var isValid = true;
@@ -170,16 +191,27 @@
 
             // Validate Password
             var password = $('#password').val().trim();
+            var passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@@$!%*?&])[A-Za-z\d@@$!%*?&]{6,}$/;
+
             if (password === '') {
-                $('#password').next('.invalid-feedback').show();
+                $('#passwordEmpty').show();
+                $('#passwordInvalid').hide();
                 isValid = false;
+            } else if (!passwordPattern.test(password)) {
+                $('#passwordEmpty').hide();
+                $('#passwordInvalid').show();
+                isValid = false;
+            } else {
+                $('#passwordEmpty').hide();
+                $('#passwordInvalid').hide();
             }
+
             //validate conform password
             var cpassword = $('#cpassword').val().trim();
-            if (cpassword === password) {
+            if (cpassword !== password) {
                 $('#cpassword').val('');
-                $('#cpassword').show();
-                $('#password').next('.invalid-feedback').show();
+                $('#cpassword').focus();
+                $('#cpassword').next('.invalid-feedback').show();
                 isValid = false;
             }
 
@@ -187,6 +219,8 @@
             var email = $('#email').val().trim();
             var emailPattern = /^[a-zA-Z0-9_.+-]+@@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
             if (email === '' || !emailPattern.test(email)) {
+                $('#email').val('');
+                $('#email').focus();
                 $('#email').next('.invalid-feedback').show();
                 isValid = false;
             }
@@ -195,21 +229,39 @@
             var mobile = $('#mobile').val().trim();
             var mobilePattern = /^[0-9]{10}$/;
             if (mobile === '' || !mobilePattern.test(mobile)) {
+                $('#mobile').val('');
+                $('#mobile').focus();
                 $('#mobile').next('.invalid-feedback').show();
                 isValid = false;
             }
 
-            // Validate Aadhar Number
+            // Validate Aadhaar Number
             var adharNumber = $('#adharNumber').val().trim();
             var adharPattern = /^\d{12}$/;
-            if (adharNumber === '' || !adharPattern.test(adharNumber)) {
-                $('#adharNumber').next('.invalid-feedback').show();
+
+            if (adharNumber === '') {
+                $('#adharNumber').val('');
+                $('#adharNumber').focus();
+                $('#invalidAadhaar').show();
+                $('#invalidAadhaarLength').hide();
                 isValid = false;
+            } else if (!adharPattern.test(adharNumber)) {
+                $('#adharNumber').val('');
+                $('#adharNumber').focus();
+                $('#invalidAadhaar').hide();
+                $('#invalidAadhaarLength').show();
+                isValid = false;
+            } else {
+                $('#invalidAadhaar').hide();
+                $('#invalidAadhaarLength').hide();
             }
 
+            
             // Validate Aadhar Upload
             var adharUpload = $('#adharUpload')[0].files[0];
             if (!adharUpload) {
+                $('#adharUpload').val('');
+                $('#adharUpload').focus();
                 $('#adharUpload').next('.invalid-feedback').show();
                 isValid = false;
             }
@@ -249,6 +301,7 @@
             $('#fullName').val('');
             $('#userName').val('');
             $('#password').val('');
+            $('#cpassword').val('');
             $('#email').val('');
             $('#mobile').val('');
             $('#adharNumber').val('');
@@ -289,6 +342,21 @@
             }
         });
     </script>
+
+    @* <script>
+        // Toggle password visibility
+        $('#togglePassword').on('click', function () {
+            var passwordField = $('#password');
+            var passwordFieldType = passwordField.attr('type');
+            if (passwordFieldType === 'password') {
+                passwordField.attr('type', 'text');
+                $(this).removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                passwordField.attr('type', 'password');
+                $(this).removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+    </script> *@
 </body>
 
 
