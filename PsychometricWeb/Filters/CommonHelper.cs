@@ -46,7 +46,35 @@ namespace PsychometricWeb.Filters
             }
             return sb1.ToString();
         }
+        public static void LogError(Exception ex, string strModule, string path)
+        {
+            string strFileName = "ErrorLog" + DateTime.Now.ToString("ddMMyyyy") + ".txt";
+            string message = string.Format("Time: {0}", DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt"));
+            message += Environment.NewLine;
+            message += "-----------------------------------------------------------";
+            message += Environment.NewLine;
 
+            message += string.Format("Message: {0}", ex.Message);
+            message += Environment.NewLine;
+            message += string.Format("StackTrace: {0}", ex.StackTrace);
+            message += Environment.NewLine;
+            message += string.Format("Source: {0}", ex.Source);
+            message += Environment.NewLine;
+            message += string.Format("TargetSite: {0}", ex.TargetSite.ToString());
+            message += Environment.NewLine;
+            message += "-----------------------------------------------------------";
+            message += Environment.NewLine;
+            path += "/ErrorLog/";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            path += strFileName;
+            using (StreamWriter writer = new StreamWriter(path, true))
+            {
+                writer.WriteLine(message);
+            }
+        }
         public static string GenerateCronExpression(string Minute, string Hour, string Day)
         {
             // Format: "ss mm HH dd MM ? yyyy"

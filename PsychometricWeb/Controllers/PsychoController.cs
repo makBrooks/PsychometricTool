@@ -15,10 +15,12 @@ namespace PsychometricWeb.Controllers
         private IPsychometricRepo _Psycho;
      
         private readonly IConfiguration _config;
-        public PsychoController(IPsychometricRepo Psycho, IConfiguration config)
+        private readonly IWebHostEnvironment _env;
+        public PsychoController(IPsychometricRepo Psycho, IConfiguration config, IWebHostEnvironment env)
         {
             _Psycho = Psycho;
             _config = config;
+            _env = env;
         }
         public IActionResult Index()
         {
@@ -34,9 +36,19 @@ namespace PsychometricWeb.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
-            return View();
+            try
+            {
+                this.Request.HttpContext.Session.Clear();
+                await HttpContext.SignOutAsync(SysManageAuthAttribute.SysManageAuthScheme);
+                return View();
+            }
+            catch (Exception ex)
+            {
+                CommonHelper.LogError(ex, "Loginload", Path.Combine(_env.WebRootPath, "Log"));
+                throw;
+            }
         }
         [HttpPost]
         public async Task<IActionResult> Login(Login Log)
