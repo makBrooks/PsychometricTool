@@ -94,7 +94,7 @@ namespace PsychometricWeb.Controllers
         {
             var identity = new ClaimsIdentity(SysManageAuthAttribute.SysManageAuthScheme);  // Specify the authentication type
             List<Claim> claims = new List<Claim>(){
-                            new Claim(ClaimTypes.Role, user.Role.ToString()),
+                            new Claim(ClaimTypes.Role, user.UserType.ToString()),
                             new Claim("UID", user.UID),
                             new Claim("FullName", user.FULLNAME),
                             new Claim("UserName", user.UName),
@@ -118,7 +118,7 @@ namespace PsychometricWeb.Controllers
             }
             else
             {
-                return RedirectToAction("Start", "Psycho");
+                return RedirectToAction("PsychoInsert", "Psycho");
             }
         }
         [Authorize(Roles = "1,2")]
@@ -130,9 +130,8 @@ namespace PsychometricWeb.Controllers
                 return Json(res);
             }
             else
-            {
-                var res = _Psycho.GetPsychometricView();
-                return View(res);
+            {                
+                return View();
             }
             
 
