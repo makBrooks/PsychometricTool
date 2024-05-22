@@ -13,7 +13,7 @@ namespace PsychometricWeb.Controllers
     public class PsychoController : Controller
     {
         private IPsychometricRepo _Psycho;
-     
+
         private readonly IConfiguration _config;
         private readonly IWebHostEnvironment _env;
         public PsychoController(IPsychometricRepo Psycho, IConfiguration config, IWebHostEnvironment env)
@@ -33,6 +33,7 @@ namespace PsychometricWeb.Controllers
         //[Authorize(Roles = "2")]
         public IActionResult PsychoInsert()
         {
+            ViewBag.User = User.FindFirst("UID")?.Value;
             return View();
         }
         [HttpGet]
@@ -57,8 +58,8 @@ namespace PsychometricWeb.Controllers
             {
                 int retVal = 0;
                 var loginDetail = _Psycho.Login(Log, out retVal);
-               
-                if (loginDetail !=null)
+
+                if (loginDetail != null)
                 {
                     generateClaim(loginDetail);
 
@@ -101,19 +102,15 @@ namespace PsychometricWeb.Controllers
                             new Claim("MobileNo", user.Phone),
                             new Claim("UserType", user.UserType),
                         };
-                var isSystem = false;
-                identity.AddClaims(claims);
-                identity.AddClaim(new Claim(ClaimTypes.IsPersistent, isSystem.ToString()));
+            var isSystem = false;
+            identity.AddClaims(claims);
+            identity.AddClaim(new Claim(ClaimTypes.IsPersistent, isSystem.ToString()));
 
-                var principal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync(SysManageAuthAttribute.SysManageAuthScheme, principal);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
+            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(SysManageAuthAttribute.SysManageAuthScheme, principal);
         }
+
+
         [Authorize]
         public IActionResult ManageUser()
         {
@@ -130,16 +127,16 @@ namespace PsychometricWeb.Controllers
         [Authorize(Roles = "1,2")]
         public IActionResult ViewPsycho(Psychometriclist obj)
         {
-            if (obj.Name!=null)
+            if (obj.Name != null)
             {
                 var res = _Psycho.GetPsychometricViewSearch(obj);
                 return Json(res);
             }
             else
-            {                
+            {
                 return View();
             }
-            
+
 
         }
         [HttpPost]
@@ -156,7 +153,7 @@ namespace PsychometricWeb.Controllers
             for (int i = 0; i < objPsycho.Most.Length; i++)
             {
                 DataRow row = dataTable.NewRow();
-                row["A"] =  objPsycho.A[i].ToString();
+                row["A"] = objPsycho.A[i].ToString();
                 row["B"] = objPsycho.B[i].ToString();
                 row["C"] = objPsycho.C[i].ToString();
                 row["D"] = objPsycho.D[i].ToString();
@@ -175,6 +172,6 @@ namespace PsychometricWeb.Controllers
             var res = _Psycho.GetNameSearch(obj);
             return Json(res);
         }
-        
+
     }
 }
