@@ -64,10 +64,10 @@
             <div class="row col-md-12">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="cpassword">Conform Password<span class="text-danger">*</span></label>
-                        <input type="password" class="form-control" id="cpassword" placeholder="Enter password" required>
+                        <label for="cpassword">Confirm Password<span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="cpassword" placeholder="Enter confirm password" required>
                         <div id="cpassword" class="invalid-feedback">
-                            Please Enter Conform Password.
+                            Confirm Password must be Equal to Password.
                         </div>
                     </div>
                 </div>
@@ -145,8 +145,11 @@
                     <div class="form-group">
                         <label for="adharUpload">Upload Aadhaar<span class="text-danger">*</span></label>
                         <input type="file" class="form-control" id="adharUpload" accept="image/*" required>
-                        <div id="adharUpload" class="invalid-feedback">
+                        <div id="adharUploadFeedback" class="invalid-feedback">
                             Please Upload Your Aadhaar Image.
+                        </div>
+                        <div id="invalidAadhaarImg" class="invalid-feedback">
+                            Invalid file type. Please upload an image.
                         </div>
                     </div>
                 </div>
@@ -273,13 +276,27 @@
 
             
             // Validate Aadhar Upload
+            
             var adharUpload = $('#adharUpload')[0].files[0];
+            var validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/svg+xml', 'image/webp'];
+
             if (!adharUpload) {
                 $('#adharUpload').val('');
                 $('#adharUpload').focus();
-                $('#adharUpload').next('.invalid-feedback').show();
+                $('#adharUploadFeedback').show();
+                $('#invalidAadhaarImg').hide();
                 isValid = false;
+            } else if (!validImageTypes.includes(adharUpload.type)) {
+                $('#adharUpload').val('');
+                $('#adharUpload').focus();
+                $('#adharUploadFeedback').hide(); // Hide the "Please Upload Your Aadhaar Image" feedback
+                $('#invalidAadhaarImg').show(); // Show the "Invalid file type" feedback
+                isValid = false;
+            } else {
+                $('#adharUploadFeedback').hide();
+                $('#invalidAadhaarImg').hide();
             }
+
 
             // If all fields are valid, proceed with the AJAX request
             if (isValid) {
@@ -381,6 +398,32 @@
             }
         });
     </script> *@
+    <script>
+        document.getElementById("fullName").addEventListener("input", function () {
+            var fullNameInput = document.getElementById("fullName");
+
+            if (/[^a-zA-Z ]/.test(fullNameInput.value)) {
+                fullNameInput.value = fullNameInput.value.replace(/[^a-zA-Z ]/g, '');
+            }
+        });
+   
+        document.getElementById("userName").addEventListener("input", function () {
+            var userNameInput = document.getElementById("userName");
+
+            if (/[^a-zA-Z0-9]/.test(userNameInput.value)) {
+                userNameInput.value = userNameInput.value.replace(/[^a-zA-Z0-9]/g, '');
+            }
+        });
+    
+        document.getElementById('adharNumber').addEventListener('input', function () {
+            // Remove non-numeric characters from the input value
+            this.value = this.value.replace(/\D/g, '');
+        });
+        document.getElementById('mobile').addEventListener('input', function () {
+            // Remove non-numeric characters from the input value
+            this.value = this.value.replace(/\D/g, '');
+        });
+    </script>
 </body>
 
 

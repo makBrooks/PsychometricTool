@@ -31,7 +31,7 @@
             <div class="form-group">
                 <label for="Name">Name:<span class="text-danger">*</span></label>
                 <input type="text" id="Name" name="Name" class="form-control" required>
-
+                <input type="hidden" id="userId" />
             </div>
         </div>
         <div class="col-md-4">
@@ -106,6 +106,7 @@
                                 return {
                                     value: item.name,
                                     mob: item.phone,
+                                    uid: item.uid,
                                     email:item.email
                                 }
                             }))
@@ -122,7 +123,9 @@
                 $("#Name").val(ui.item.value);
                 var mobile = ui.item.mob;
                 var eMail = ui.item.email;
+                var user = ui.item.uid;
                 $('#email').val(eMail);
+                $('#userId').val(user);
 
                 $("#mobile").val(mobile);
 
@@ -145,6 +148,7 @@
             var formData = {
                 Name: $('#Name').val(),
                 Email: $('#email').val(),
+                UID: $('#userId').val(),
                 Phone: $('#mobile').val()
             };
             $.ajax({
