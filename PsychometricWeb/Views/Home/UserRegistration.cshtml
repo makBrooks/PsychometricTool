@@ -67,7 +67,7 @@
                         <label for="cpassword">Conform Password<span class="text-danger">*</span></label>
                         <input type="password" class="form-control" id="cpassword" placeholder="Enter password" required>
                         <div id="cpassword" class="invalid-feedback">
-                            Please Enter Conform Password.
+                            Conform Password must be Equal to Password.
                         </div>
                     </div>
                 </div>
@@ -134,8 +134,11 @@
                     <div class="form-group">
                         <label for="adharUpload">Upload Aadhaar<span class="text-danger">*</span></label>
                         <input type="file" class="form-control" id="adharUpload" accept="image/*" required>
-                        <div id="adharUpload" class="invalid-feedback">
+                        <div id="adharUploadFeedback" class="invalid-feedback">
                             Please Upload Your Aadhaar Image.
+                        </div>
+                        <div id="invalidAadhaarImg" class="invalid-feedback">
+                            Invalid file type. Please upload an image.
                         </div>
                     </div>
                 </div>
@@ -258,13 +261,27 @@
 
             
             // Validate Aadhar Upload
+            
             var adharUpload = $('#adharUpload')[0].files[0];
+            var validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/svg+xml', 'image/webp'];
+
             if (!adharUpload) {
                 $('#adharUpload').val('');
                 $('#adharUpload').focus();
-                $('#adharUpload').next('.invalid-feedback').show();
+                $('#adharUploadFeedback').show();
+                $('#invalidAadhaarImg').hide();
                 isValid = false;
+            } else if (!validImageTypes.includes(adharUpload.type)) {
+                $('#adharUpload').val('');
+                $('#adharUpload').focus();
+                $('#adharUploadFeedback').hide(); // Hide the "Please Upload Your Aadhaar Image" feedback
+                $('#invalidAadhaarImg').show(); // Show the "Invalid file type" feedback
+                isValid = false;
+            } else {
+                $('#adharUploadFeedback').hide();
+                $('#invalidAadhaarImg').hide();
             }
+
 
             // If all fields are valid, proceed with the AJAX request
             if (isValid) {

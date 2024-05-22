@@ -15,67 +15,80 @@ namespace PsychometricWeb.Repository
         }
         public List<Psychometriclist> GetNameSearch(Psychometriclist objNameSearch)
         {
-            var p = new DynamicParameters();
-            var con = Connection();
-            p.Add("@P_Action", "Name");
-            p.Add("@P_Name", objNameSearch.Name);
-            p.Add("@Msg",0);
-            var result = con.Query<Psychometriclist>("USP_Psychometric_Tool", p, commandType: CommandType.StoredProcedure).ToList();
-            return result.ToList();
+            try
+            {
+                var p = new DynamicParameters();
+                var con = Connection();
+                p.Add("@P_Action", "Name");
+                p.Add("@P_Name", objNameSearch.Name);
+                p.Add("@Msg", 0);
+                var result = con.Query<Psychometriclist>("USP_Psychometric_Tool", p, commandType: CommandType.StoredProcedure).ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public List<Psychometriclist> GetPsychometricView()
         {
-            var p = new DynamicParameters();
-            var con = Connection();
-            p.Add("@P_Action", "View");
-            var result = con.Query<Psychometriclist>("USP_Psychometric_Tool", p, commandType: CommandType.StoredProcedure).ToList();
-            return null;
+            try
+            {
+                var p = new DynamicParameters();
+                var con = Connection();
+                p.Add("@P_Action", "View");
+                var result = con.Query<Psychometriclist>("USP_Psychometric_Tool", p, commandType: CommandType.StoredProcedure).ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
+
         public List<Psychometriclist> GetPsychometricViewSearch(Psychometriclist objSearch)
         {
-            var p = new DynamicParameters();
-            var con = Connection();
-            p.Add("@P_Action", "SearchView");
-            p.Add("@P_Email", objSearch.Email);
-            p.Add("@P_Phone", objSearch.Phone);
-            p.Add("@P_Name", objSearch.Name);
-            var result = con.Query<Psychometriclist>("USP_Psychometric_Tool", p, commandType: CommandType.StoredProcedure).ToList();
-            return result.ToList();
+            try
+            {
+                var p = new DynamicParameters();
+                var con = Connection();
+                p.Add("@P_Action", "SearchView");
+                p.Add("@P_Email", objSearch.Email);
+                p.Add("@P_Phone", objSearch.Phone);
+                p.Add("@P_Name", objSearch.Name);
+                var result = con.Query<Psychometriclist>("USP_Psychometric_Tool", p, commandType: CommandType.StoredProcedure).ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public string SubmitPsychometricTool(DataTable objPsycho)
         {
             try
             {
-                //var con = Connection();
-                //if (con.State == ConnectionState.Closed) con.Open();
                 using (SqlConnection connection = new SqlConnection(_configuration["ConnectionStrings:MyConnection"]))
                 {
                     connection.Open();
 
-                    // Define an anonymous object to hold input and output parameters
                     var parameters = new
                     {
                         P_Type = objPsycho,
                         P_Action = "Insert",
-                        Msg=0
+                        Msg = 0
                     };
 
-                    // Execute the stored procedure using Dapper
                     var result = connection.Execute(
-                        "USP_Psychometric_Tool", // Stored procedure name
-                        parameters, // Input parameters
-                        commandType: CommandType.StoredProcedure // Specify command type
+                        "USP_Psychometric_Tool",
+                        parameters,
+                        commandType: CommandType.StoredProcedure
                     );
 
-                    // Retrieve the output parameter value
-                    
-
-                    return "1"; // Return the output value
+                    return "1";
                 }
-
-                
             }
             catch (Exception ex)
             {
@@ -85,35 +98,49 @@ namespace PsychometricWeb.Repository
 
         public async Task<int> InsertRegistration(Registration Reg)
         {
-            var p = new DynamicParameters();
+            try
+            {
+                var p = new DynamicParameters();
+                var con = Connection();
+                p.Add("@P_Action", "Regi");
+                p.Add("@P_UName", Reg.UNAME);
+                p.Add("@P_Name", Reg.FULLNAME);
+                p.Add("@P_UPassword", Reg.PASSWORD);
+                p.Add("@P_Email", Reg.EMAIL);
+                p.Add("@P_Phone", Reg.PHONE);
+                p.Add("@P_AadhaarNo", Reg.ADHARNUMBER);
+                p.Add("@P_AadhaarImg", Reg.UPLOADPATH);
+                p.Add("@Msg", dbType: DbType.Int32, direction: ParameterDirection.Output, size: 5215585);
 
-            var con = Connection();
-            p.Add("@P_Action", "Regi");
-
-            p.Add("@P_UName", Reg.UNAME);
-            p.Add("@P_Name", Reg.FULLNAME);
-            p.Add("@P_UPassword", Reg.PASSWORD);
-            p.Add("@P_Email", Reg.EMAIL);
-            p.Add("@P_Phone", Reg.PHONE);
-            p.Add("@P_AadhaarNo", Reg.ADHARNUMBER);
-            p.Add("@P_AadhaarImg", Reg.UPLOADPATH);
-
-            p.Add("@Msg", dbType: DbType.Int32, direction: ParameterDirection.Output, size: 5215585);
-            await con.ExecuteAsync("USP_Psychometric_Tool", p, commandType: CommandType.StoredProcedure);
-            int returnVal = p.Get<Int32>("@Msg");
-            return returnVal;
+                await con.ExecuteAsync("USP_Psychometric_Tool", p, commandType: CommandType.StoredProcedure);
+                int returnVal = p.Get<Int32>("@Msg");
+                return returnVal;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public UsersDto? Login(Login Log, out int returnVal)
         {
-            var p = new DynamicParameters();
-            var con = Connection();
-            p.Add("@P_Action", "Login");
-            p.Add("@P_UName", Log.userName);
-            p.Add("@Msg", dbType: DbType.Int32, direction: ParameterDirection.Output);
-            var userDetails = con.Query<UsersDto>("USP_Psychometric_Tool", p, commandType: CommandType.StoredProcedure).FirstOrDefault();
-            returnVal = p.Get<int>("Msg");
-            return userDetails;
+            try
+            {
+                var p = new DynamicParameters();
+                var con = Connection();
+                p.Add("@P_Action", "Login");
+                p.Add("@P_UName", Log.userName);
+                p.Add("@Msg", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                var userDetails = con.Query<UsersDto>("USP_Psychometric_Tool", p, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                returnVal = p.Get<int>("Msg");
+
+                return userDetails;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
     }
 }
