@@ -13,7 +13,7 @@
         public string[]? D { get; set; }
         public string[]? Most { get; set; }
         public string[]? Least { get; set; }
-        
+        public string? UID { get; set; }
     }
     public class Psychometriclist
     {
@@ -26,6 +26,7 @@
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? Phone { get; set; }
+        public string? UID { get; set; }
 
     }
     public class Login

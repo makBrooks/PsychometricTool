@@ -62,12 +62,12 @@ namespace PsychometricWeb.Controllers
                 {
                     generateClaim(loginDetail);
 
-                    if (loginDetail.UID == "1")
+                    if (loginDetail.UserType == "1")
                     {
 
                         return Content(new JsonResponse { statuscode = 200, status = "success", msg = $"Welcome '{loginDetail.FULLNAME}'" }.ToJson());
                     }
-                    if (loginDetail.UID == "2")
+                    if (loginDetail.UserType == "2")
                     {
                         return Content(new JsonResponse { statuscode = 200, status = "success", msg = $"Welcome '{loginDetail.FULLNAME}'" }.ToJson());
 
