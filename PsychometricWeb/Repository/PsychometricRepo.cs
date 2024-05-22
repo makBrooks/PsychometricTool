@@ -19,6 +19,7 @@ namespace PsychometricWeb.Repository
             var con = Connection();
             p.Add("@P_Action", "Name");
             p.Add("@P_Name", objNameSearch.Name);
+            p.Add("@Msg",0);
             var result = con.Query<Psychometriclist>("USP_Psychometric_Tool", p, commandType: CommandType.StoredProcedure).ToList();
             return result.ToList();
         }
@@ -56,8 +57,9 @@ namespace PsychometricWeb.Repository
                     // Define an anonymous object to hold input and output parameters
                     var parameters = new
                     {
-                        P_Tool = objPsycho,
-                        P_Action = "Insert"
+                        P_Type = objPsycho,
+                        P_Action = "Insert",
+                        Msg=0
                     };
 
                     // Execute the stored procedure using Dapper

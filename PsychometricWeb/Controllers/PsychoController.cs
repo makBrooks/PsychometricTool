@@ -92,11 +92,9 @@ namespace PsychometricWeb.Controllers
         }
         public async Task generateClaim(UsersDto user)
         {
-            try
-            {
-                var identity = new ClaimsIdentity(SysManageAuthAttribute.SysManageAuthScheme);  // Specify the authentication type
-                List<Claim> claims = new List<Claim>(){
-                            new Claim(ClaimTypes.Role, user.Role.ToString()),
+            var identity = new ClaimsIdentity(SysManageAuthAttribute.SysManageAuthScheme);  // Specify the authentication type
+            List<Claim> claims = new List<Claim>(){
+                            new Claim(ClaimTypes.Role, user.UserType.ToString()),
                             new Claim("UID", user.UID),
                             new Claim("FullName", user.FULLNAME),
                             new Claim("UserName", user.UName),
@@ -119,22 +117,14 @@ namespace PsychometricWeb.Controllers
         [Authorize]
         public IActionResult ManageUser()
         {
-            try
+            int intROLEID = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.Role));
+            if (intROLEID == (int)CommonHelper.EnRoles.Admin)
             {
-                int intROLEID = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.Role));
-                if (intROLEID == (int)CommonHelper.EnRoles.Admin)
-                {
-                    return RedirectToAction("ViewPsycho", "Psycho");
-                }
-                else
-                {
-                    return RedirectToAction("Start", "Psycho");
-                }
+                return RedirectToAction("ViewPsycho", "Psycho");
             }
-            catch (Exception ex)
+            else
             {
-
-                throw ex;
+                return RedirectToAction("PsychoInsert", "Psycho");
             }
         }
         [Authorize(Roles = "1,2")]
@@ -146,9 +136,8 @@ namespace PsychometricWeb.Controllers
                 return Json(res);
             }
             else
-            {
-                var res = _Psycho.GetPsychometricView();
-                return View(res);
+            {                
+                return View();
             }
             
 
@@ -157,27 +146,23 @@ namespace PsychometricWeb.Controllers
         public IActionResult PsychoInsert(Psychometric objPsycho)
         {
             DataTable dataTable = new DataTable();
-            dataTable.Columns.Add("Name", typeof(string));
-            dataTable.Columns.Add("Email", typeof(string));
-            dataTable.Columns.Add("Phone", typeof(string));
             dataTable.Columns.Add("A", typeof(string));
             dataTable.Columns.Add("B", typeof(string));
             dataTable.Columns.Add("C", typeof(string));
             dataTable.Columns.Add("D", typeof(string));
             dataTable.Columns.Add("MOST", typeof(string));
             dataTable.Columns.Add("LEAST", typeof(string));
+            dataTable.Columns.Add("UId", typeof(string));
             for (int i = 0; i < objPsycho.Most.Length; i++)
             {
                 DataRow row = dataTable.NewRow();
-                row["Name"] = objPsycho.Name;
-                row["Email"] = objPsycho.Email;
-                row["Phone"] = objPsycho.Phone;
                 row["A"] =  objPsycho.A[i].ToString();
                 row["B"] = objPsycho.B[i].ToString();
                 row["C"] = objPsycho.C[i].ToString();
                 row["D"] = objPsycho.D[i].ToString();
                 row["MOST"] = objPsycho.Most[i].ToString();
                 row["LEAST"] = objPsycho.Least[i].ToString();
+                row["UId"] = Convert.ToInt32(User.FindFirst("UID")?.Value);
 
                 dataTable.Rows.Add(row);
             }
