@@ -101,12 +101,18 @@ namespace PsychometricWeb.Controllers
                             new Claim("MobileNo", user.Phone),
                             new Claim("UserType", user.UserType),
                         };
-            var isSystem = false;
-            identity.AddClaims(claims);
-            identity.AddClaim(new Claim(ClaimTypes.IsPersistent, isSystem.ToString()));
+                var isSystem = false;
+                identity.AddClaims(claims);
+                identity.AddClaim(new Claim(ClaimTypes.IsPersistent, isSystem.ToString()));
 
-            var principal = new ClaimsPrincipal(identity);
-            await HttpContext.SignInAsync(SysManageAuthAttribute.SysManageAuthScheme, principal);
+                var principal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync(SysManageAuthAttribute.SysManageAuthScheme, principal);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         [Authorize]
         public IActionResult ManageUser()
