@@ -38,6 +38,7 @@ namespace PsychometricWeb.Repository
                 var p = new DynamicParameters();
                 var con = Connection();
                 p.Add("@P_Action", "View");
+                p.Add("@Msg", 0);
                 var result = con.Query<Psychometriclist>("USP_Psychometric_Tool", p, commandType: CommandType.StoredProcedure).ToList();
                 return result;
             }
@@ -57,6 +58,7 @@ namespace PsychometricWeb.Repository
                 p.Add("@P_Email", objSearch.Email);
                 p.Add("@P_Phone", objSearch.Phone);
                 p.Add("@P_Name", objSearch.Name);
+                p.Add("@Msg", 0);
                 var result = con.Query<Psychometriclist>("USP_Psychometric_Tool", p, commandType: CommandType.StoredProcedure).ToList();
                 return result;
             }

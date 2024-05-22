@@ -64,10 +64,10 @@
             <div class="row col-md-12">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="cpassword">Conform Password<span class="text-danger">*</span></label>
-                        <input type="password" class="form-control" id="cpassword" placeholder="Enter password" required>
+                        <label for="cpassword">Confirm Password<span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="cpassword" placeholder="Enter confirm password" required>
                         <div id="cpassword" class="invalid-feedback">
-                            Conform Password must be Equal to Password.
+                            Confirm Password must be Equal to Password.
                         </div>
                     </div>
                 </div>
@@ -398,6 +398,32 @@
             }
         });
     </script> *@
+    <script>
+        document.getElementById("fullName").addEventListener("input", function () {
+            var fullNameInput = document.getElementById("fullName");
+
+            if (/[^a-zA-Z ]/.test(fullNameInput.value)) {
+                fullNameInput.value = fullNameInput.value.replace(/[^a-zA-Z ]/g, '');
+            }
+        });
+   
+        document.getElementById("userName").addEventListener("input", function () {
+            var userNameInput = document.getElementById("userName");
+
+            if (/[^a-zA-Z0-9]/.test(userNameInput.value)) {
+                userNameInput.value = userNameInput.value.replace(/[^a-zA-Z0-9]/g, '');
+            }
+        });
+    
+        document.getElementById('adharNumber').addEventListener('input', function () {
+            // Remove non-numeric characters from the input value
+            this.value = this.value.replace(/\D/g, '');
+        });
+        document.getElementById('mobile').addEventListener('input', function () {
+            // Remove non-numeric characters from the input value
+            this.value = this.value.replace(/\D/g, '');
+        });
+    </script>
 </body>
 
 
