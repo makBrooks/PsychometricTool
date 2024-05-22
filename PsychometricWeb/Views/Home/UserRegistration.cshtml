@@ -97,14 +97,25 @@
                     </div>
                 </div>
                 <div class="col-md-1" id="verify" style="display:none;">
-                    <div class="form-group">
-                        <label></label>
-                        <input type="submit" class="btn btn-primary me-2" id="btnVerify" value="verify">
+
+                    <div class="col-md-2" id="tttttttttttt">
+                        <div class="form-group">
+                            <label></label>
+
+                            <input type="submit" class="btn btn-primary mt-1" id="btnVerify" value="verify">
+                        </div>
+
                     </div>
+                   @*  <div class="form-group">
+                        <label></label>
+                       
+                        <input type="submit" class="btn btn-primary me-2" id="btnVerify" value="verify">
+                       
+                    </div> *@
                 </div>
-                <div class="col-md-1" id="tickMarkContainer" style="display: none;">
+                @* <div class="col-md-1" id="tickMarkContainer" style="display: none;">
                     <span class="tick-mark">✔️</span>
-                </div>
+                </div> *@
             </div>
 
             <div class="row col-md-12">
@@ -159,12 +170,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
+        var OTPSubmit = 0;
+
         $(document).ready(function () {
            
         });
         $('#mobile').focus(function () {
             $('#getotp').show();
+            $('#tttttttttttt').show();
             $('#tickMarkContainer').hide();
+
         });
         $('#btnSubmit').click(function () {
             var isValid = true;
@@ -268,28 +283,34 @@
 
             // If all fields are valid, proceed with the AJAX request
             if (isValid) {
-                
-                var formData = new FormData();
-                formData.append('FULLNAME', fullName);
-                formData.append('UNAME', userName);
-                formData.append('PASSWORD', password);
-                formData.append('EMAIL', email);
-                formData.append('PHONE', mobile);
-                formData.append('ADHARNUMBER', adharNumber);
-                formData.append('ADHARUPLOAD', adharUpload);
-                $.ajax({
-                    url: '/Home/UserRegistration',
-                    type: 'POST',
-                    data: formData,
-                    processData: false,  // prevent jQuery from converting the data
-                    contentType: false,  // prevent jQuery from setting the content-type
-                    success: function (response) {
-                        alert('Registration successful');
-                    },
-                    error: function (xhr, status, error) {
-                        alert('Registration failed: ' + xhr.responseText);
-                    }
-                });
+
+                if (OTPSubmit != 0) {
+
+                    var formData = new FormData();
+                    formData.append('FULLNAME', fullName);
+                    formData.append('UNAME', userName);
+                    formData.append('PASSWORD', password);
+                    formData.append('EMAIL', email);
+                    formData.append('PHONE', mobile);
+                    formData.append('ADHARNUMBER', adharNumber);
+                    formData.append('ADHARUPLOAD', adharUpload);
+                    $.ajax({
+                        url: '/Home/UserRegistration',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,  // prevent jQuery from converting the data
+                        contentType: false,  // prevent jQuery from setting the content-type
+                        success: function (response) {
+                            alert('Registration successful');
+                        },
+                        error: function (xhr, status, error) {
+                            alert('Registration failed: ' + xhr.responseText);
+                        }
+                    });
+                }
+                else{
+                    alert("please Enter OTP details then proceed.");
+                }
             }
             //else {
             //    alert('Please fill out all required fields correctly.');
@@ -321,6 +342,7 @@
                 $('#verify').show();
             } else {
                 alert('Please enter a valid mobile number.');
+                OTPSubmit = 0;
             }
         });
 
@@ -332,13 +354,15 @@
 
                 // Show a tick mark inside the mobile textbox
                 $('#mobile').addClass('is-valid');
-                $('#mobile').after('<span class="tick-mark">✔️</span>');
+                //$('#mobile').after('<span class="tick-mark">✔️</span>');
 
                 // Hide the OTP input and Verify button
                 $('#otp').hide();
                 $('#verify').hide();
+                OTPSubmit = 1;
             } else {
                 alert('Invalid OTP. Please try again.');
+                OTPSubmit = 0;
             }
         });
     </script>

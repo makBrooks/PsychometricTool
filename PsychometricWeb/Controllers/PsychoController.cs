@@ -92,8 +92,10 @@ namespace PsychometricWeb.Controllers
         }
         public async Task generateClaim(UsersDto user)
         {
-            var identity = new ClaimsIdentity(SysManageAuthAttribute.SysManageAuthScheme);  // Specify the authentication type
-            List<Claim> claims = new List<Claim>(){
+            try
+            {
+                var identity = new ClaimsIdentity(SysManageAuthAttribute.SysManageAuthScheme);  // Specify the authentication type
+                List<Claim> claims = new List<Claim>(){
                             new Claim(ClaimTypes.Role, user.Role.ToString()),
                             new Claim("UID", user.UID),
                             new Claim("FullName", user.FULLNAME),
@@ -101,24 +103,38 @@ namespace PsychometricWeb.Controllers
                             new Claim("MobileNo", user.Phone),
                             new Claim("UserType", user.UserType),
                         };
-            var isSystem = false;
-            identity.AddClaims(claims);
-            identity.AddClaim(new Claim(ClaimTypes.IsPersistent, isSystem.ToString()));
+                var isSystem = false;
+                identity.AddClaims(claims);
+                identity.AddClaim(new Claim(ClaimTypes.IsPersistent, isSystem.ToString()));
 
-            var principal = new ClaimsPrincipal(identity);
-            await HttpContext.SignInAsync(SysManageAuthAttribute.SysManageAuthScheme, principal);
+                var principal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync(SysManageAuthAttribute.SysManageAuthScheme, principal);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         [Authorize]
         public IActionResult ManageUser()
         {
-            int intROLEID = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.Role));
-            if (intROLEID == (int)CommonHelper.EnRoles.Admin)
+            try
             {
-                return RedirectToAction("ViewPsycho", "Psycho");
+                int intROLEID = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.Role));
+                if (intROLEID == (int)CommonHelper.EnRoles.Admin)
+                {
+                    return RedirectToAction("ViewPsycho", "Psycho");
+                }
+                else
+                {
+                    return RedirectToAction("Start", "Psycho");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Start", "Psycho");
+
+                throw ex;
             }
         }
         [Authorize(Roles = "1,2")]
