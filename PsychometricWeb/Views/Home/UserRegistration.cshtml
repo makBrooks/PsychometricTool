@@ -20,7 +20,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="fullName">Full Name<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="fullName" placeholder="Enter full name" required autocomplete="off">
+                        <input type="text" class="form-control" id="fullName" placeholder="Enter full name" required autocomplete="off" oninput="avoidFirstSpace(event)">
                         <div id="fullName" class="invalid-feedback">
                             Please Enter Your Name.
                         </div>
@@ -29,7 +29,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="userName">User Name</label>
-                        <input type="text" class="form-control" id="userName" placeholder="Enter username" required autocomplete="off">
+                        <input type="text" class="form-control" id="userName" placeholder="Enter username" required autocomplete="off" oninput="avoidFirstSpace(event)">
                         <div id="userName" class="invalid-feedback">
                             Please Enter User Name.
                         </div>
@@ -42,7 +42,7 @@
                             <i class="fa fa-info-circle"></i>
                         </a>
                       <div class="input-group">
-                            <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                            <input type="password" class="form-control" id="password" placeholder="Enter password" required oninput="avoidFirstSpace(event)">
                             @* <div class="input-group-append">
                                 <span class="input-group-text">
                                     <i class="fa fa-eye" id="togglePassword" style="cursor: pointer;"></i>
@@ -65,7 +65,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="cpassword">Confirm Password<span class="text-danger">*</span></label>
-                        <input type="password" class="form-control" id="cpassword" placeholder="Enter confirm password" required>
+                        <input type="password" class="form-control" id="cpassword" placeholder="Enter confirm password" required oninput="avoidFirstSpace(event)">
                         <div id="cpassword" class="invalid-feedback">
                             Confirm Password must be Equal to Password.
                         </div>
@@ -74,7 +74,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="mobile">Mobile Number<span class="text-danger">*</span></label>
-                        <input type="text" maxlength="10" id="mobile" name="mobile" class="form-control" placeholder="Enter mobile number" required>
+                        <input type="text" maxlength="10" id="mobile" name="mobile" class="form-control" placeholder="Enter mobile number" required oninput="avoidFirstSpace(event)">
 
                         <div id="mobileno" class="invalid-feedback">
                             Please Enter Valid Mobile Number.
@@ -90,7 +90,7 @@
                 <div class="col-md-3" id="otp" style="display:none;">
                     <div class="form-group">
                         <label for="otp">OTP<span class="text-danger">*</span></label>
-                        <input type="text" maxlength="4" id="otp" class="form-control" required>
+                        <input type="text" maxlength="4" id="otp" class="form-control" required oninput="avoidFirstSpace(event)">
                         <div id="otp" class="invalid-feedback">
                             Please Enter Valid otp.
                         </div>
@@ -132,7 +132,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="adharNumber">Aadhaar No.<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="adharNumber" maxlength="12" placeholder="Enter Aadhaar number" required>
+                        <input type="text" class="form-control" id="adharNumber" maxlength="12" placeholder="Enter Aadhaar number" required oninput="avoidFirstSpace(event)">
                         <div id="invalidAadhaar" class="invalid-feedback">
                             Please enter Aadhaar Number.
                         </div>
@@ -423,6 +423,21 @@
             // Remove non-numeric characters from the input value
             this.value = this.value.replace(/\D/g, '');
         });
+    </script>
+    <script>
+        function avoidFirstSpace(event) {
+            const inputElement = event.target;
+            const inputValue = inputElement.value;
+
+            if (inputValue.length > 0 && inputValue.charCodeAt(0) === 32) {
+                inputElement.value = inputValue.slice(1);
+            }
+            if (inputElement.type === 'number') {
+                inputElement.value = inputValue.trimStart();
+            }
+            if (inputValue.startsWith('-')) {
+                inputElement.value = inputValue.substring(1);
+            }
     </script>
 </body>
 
