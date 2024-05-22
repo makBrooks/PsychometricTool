@@ -140,27 +140,23 @@ namespace PsychometricWeb.Controllers
         public IActionResult PsychoInsert(Psychometric objPsycho)
         {
             DataTable dataTable = new DataTable();
-            dataTable.Columns.Add("Name", typeof(string));
-            dataTable.Columns.Add("Email", typeof(string));
-            dataTable.Columns.Add("Phone", typeof(string));
             dataTable.Columns.Add("A", typeof(string));
             dataTable.Columns.Add("B", typeof(string));
             dataTable.Columns.Add("C", typeof(string));
             dataTable.Columns.Add("D", typeof(string));
             dataTable.Columns.Add("MOST", typeof(string));
             dataTable.Columns.Add("LEAST", typeof(string));
+            dataTable.Columns.Add("UId", typeof(string));
             for (int i = 0; i < objPsycho.Most.Length; i++)
             {
                 DataRow row = dataTable.NewRow();
-                row["Name"] = objPsycho.Name;
-                row["Email"] = objPsycho.Email;
-                row["Phone"] = objPsycho.Phone;
                 row["A"] =  objPsycho.A[i].ToString();
                 row["B"] = objPsycho.B[i].ToString();
                 row["C"] = objPsycho.C[i].ToString();
                 row["D"] = objPsycho.D[i].ToString();
                 row["MOST"] = objPsycho.Most[i].ToString();
                 row["LEAST"] = objPsycho.Least[i].ToString();
+                row["UId"] = Convert.ToInt32(User.FindFirst("UID")?.Value);
 
                 dataTable.Rows.Add(row);
             }
