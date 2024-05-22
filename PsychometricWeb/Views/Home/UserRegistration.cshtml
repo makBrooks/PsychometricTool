@@ -20,7 +20,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="fullName">Full Name<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="fullName" placeholder="Enter full name" required autocomplete="off" oninput="avoidFirstSpace(event)">
+                        <input type="text" class="form-control" id="fullName" placeholder="Enter full name" autocomplete="off" oninput="avoidFirstSpace(event)" required>
                         <div id="fullName" class="invalid-feedback">
                             Please Enter Your Name.
                         </div>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="userName">User Name</label>
+                        <label for="userName">User Name<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="userName" placeholder="Enter username" required autocomplete="off" oninput="avoidFirstSpace(event)">
                         <div id="userName" class="invalid-feedback">
                             Please Enter User Name.
@@ -122,7 +122,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="email">Email<span class="text-danger">*</span></label>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter email" required>
+                        <input type="text" id="email" name="email" class="form-control" placeholder="Enter email" oninput="avoidFirstSpace(event)" required>
 
                         <div id="emailid" class="invalid-feedback">
                             Please Enter Valid e-Mail Address.
@@ -426,18 +426,13 @@
     </script>
     <script>
         function avoidFirstSpace(event) {
-            const inputElement = event.target;
-            const inputValue = inputElement.value;
+            var inputElement = event.target;
+            var inputValue = inputElement.value;
 
             if (inputValue.length > 0 && inputValue.charCodeAt(0) === 32) {
                 inputElement.value = inputValue.slice(1);
             }
-            if (inputElement.type === 'number') {
-                inputElement.value = inputValue.trimStart();
-            }
-            if (inputValue.startsWith('-')) {
-                inputElement.value = inputValue.substring(1);
-            }
+        }
     </script>
 </body>
 
