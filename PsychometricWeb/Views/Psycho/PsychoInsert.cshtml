@@ -738,29 +738,75 @@
     <script>
         $(document).ready(function () {
             // Function to disable the corresponding radio button
-            function disableRadioButtons(inputName, value) {
-                $(`input[name^='${inputName}']`).each(function () {
-                    if ($(this).val() === value) {
+            // function disableRadioButtons(inputName, value) {
+            //     $(`input[name^='${inputName}']`).each(function () {
+            //         if ($(this).val() === value) {
+            //             $(this).prop('disabled', true);
+            //         } else {
+            //             $(this).prop('disabled', false);
+            //         }
+            //     });
+            // }
+
+            // // Event listener for most-input radio buttons
+
+            // // $('input.most-input').on('change', function () {
+            // //     var value = $(this).val();
+            // //     var name = $(this).attr('name').replace('most-input', 'least-input');
+            // //     disableRadioButtons(name, value);
+            // // });
+
+            // // Event listener for least-input radio buttons
+            // $('input.least-input').on('change', function () {
+            //     var value = $(this).val();
+            //     var name = $(this).attr('name').replace('least-input', 'most-input');
+            //     disableRadioButtons(name, value);
+            // });
+
+
+
+            // $('input.most-input').on('change', function () {
+            //     var $currentRow = $(this).closest('tr'); // Finds the closest row
+            //     var value = $(this).val(); // Gets the value of the selected radio button
+            //     var name = $(this).attr('name').replace('most-input', 'least-input'); // Adjusts the name for the least input
+            //     var $leastInputs = $currentRow.find('input[name="' + name + '"]'); // Finds the corresponding least-input in the same row
+
+            //     disableRadioButtons($leastInputs, value); // Disables the radio buttons based on the value
+            // });
+
+
+
+            ////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+            $('input.most-input').change(function () {
+                var row = $(this).closest('tr');
+                var leastInputs = row.find('input.least-input');
+                leastInputs.prop('disabled', false); // Enable all first
+                var selectedValue = $(this).val();
+                leastInputs.each(function () {
+                    if ($(this).val() === selectedValue) {
                         $(this).prop('disabled', true);
-                    } else {
-                        $(this).prop('disabled', false);
                     }
                 });
-            }
-
-            // Event listener for most-input radio buttons
-            $('input.most-input').on('change', function () {
-                var value = $(this).val();
-                var name = $(this).attr('name').replace('most-input', 'least-input');
-                disableRadioButtons(name, value);
             });
 
-            // Event listener for least-input radio buttons
-            $('input.least-input').on('change', function () {
-                var value = $(this).val();
-                var name = $(this).attr('name').replace('least-input', 'most-input');
-                disableRadioButtons(name, value);
+            $('input.least-input').change(function () {
+                var row = $(this).closest('tr');
+                var mostInputs = row.find('input.most-input');
+                mostInputs.prop('disabled', false); // Enable all first
+                var selectedValue = $(this).val();
+                mostInputs.each(function () {
+                    if ($(this).val() === selectedValue) {
+                        $(this).prop('disabled', true);
+                    }
+                });
             });
+
+
         });
     </script>
 </body>
