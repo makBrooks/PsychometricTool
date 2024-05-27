@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using PsychometricWeb.Models;
 using PsychometricWeb.Repository;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Mail;
 using System.Reflection;
 
 namespace PsychometricWeb.Controllers
@@ -64,9 +66,42 @@ namespace PsychometricWeb.Controllers
             }
 
         }
+        [HttpPost]
+        public IActionResult SendOtpEmail(string recipientEmail, string otp)
+        {
+            // Email details
+            string senderEmail = "satapathy862000@gmail.com";
+            string senderPassword = "satapathy@862000";
+            string smtpServer = "smtp.gmail.com";
+            int smtpPort = 465;
+            
 
+            // Create the email message
+            MailMessage mailMessage = new MailMessage(senderEmail, recipientEmail, "Your OTP", $"Your OTP is: {otp}");
 
+            // Configure the SMTP client
+            SmtpClient smtpClient = new SmtpClient(smtpServer)
+            {
+                Port = smtpPort,
+                Credentials = new NetworkCredential(senderEmail, senderPassword),
+                EnableSsl = true,
+                Timeout = 20000,
+        };
 
+            // Send the email
+            try
+            {
+                smtpClient.Send(mailMessage);
+                Console.WriteLine("Email sent successfully.");
+                return Json(1);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to send email. Error message: {ex.Message}");
+                return Json(ex);
+            }
+            
+        }
 
 
 

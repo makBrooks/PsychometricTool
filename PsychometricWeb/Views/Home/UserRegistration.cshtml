@@ -74,11 +74,11 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="mobile">Mobile Number<span class="text-danger">*</span></label>
-                        <input type="text" maxlength="10" id="mobile" name="mobile" class="form-control" placeholder="Enter mobile number" required oninput="avoidFirstSpace(event)">
+                        <label for="email">Email<span class="text-danger">*</span></label>
+                        <input type="text" id="email" name="email" class="form-control" placeholder="Enter email" oninput="avoidFirstSpace(event)" required>
 
-                        <div id="mobileno" class="invalid-feedback">
-                            Please Enter Valid Mobile Number.
+                        <div id="emailid" class="invalid-feedback">
+                            Please Enter Valid e-Mail Address.
                         </div>
                     </div>
                 </div>
@@ -88,6 +88,7 @@
                         <input type="submit" class="btn btn-primary mt-2" id="btnGetOtp" value="Get OTP">
                     </div>
                 </div>
+                <input type="hidden" value="0" id="hideotp" />
                 <div class="col-md-3" id="otp" style="display:none;">
                     <div class="form-group">
                         <label for="otp">OTP<span class="text-danger">*</span></label>
@@ -105,17 +106,18 @@
                         <input type="submit" class="btn btn-primary mt-2" id="btnVerify" value="Verify OTP">
                     </div>
                 </div>
-               
+
             </div>
 
             <div class="row col-md-12">
+
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="email">Email<span class="text-danger">*</span></label>
-                        <input type="text" id="email" name="email" class="form-control" placeholder="Enter email" oninput="avoidFirstSpace(event)" required>
+                        <label for="mobile">Mobile Number<span class="text-danger">*</span></label>
+                        <input type="text" maxlength="10" id="mobile" name="mobile" class="form-control" placeholder="Enter mobile number" required oninput="avoidFirstSpace(event)">
 
-                        <div id="emailid" class="invalid-feedback">
-                            Please Enter Valid e-Mail Address.
+                        <div id="mobileno" class="invalid-feedback">
+                            Please Enter Valid Mobile Number.
                         </div>
                     </div>
                 </div>
@@ -209,7 +211,7 @@
 
 
         });
-        $('#mobile').focus(function () {
+        $('#email').focus(function () {
             $('#getotp').show();
             $('#tickMarkContainer').hide();
 
@@ -224,7 +226,7 @@
                 Swal.fire({
                     icon: 'warning',
                     title: 'Verification Needed',
-                    text: 'Please verify the mobile number first.',
+                    text: 'Please verify the email first.',
                     confirmButtonText: 'OK',
                 });
                 return false;
@@ -326,8 +328,8 @@
             } else if (!validImageTypes.includes(adharUpload.type)) {
                 $('#adharUpload').val('');
                 $('#adharUpload').focus();
-                $('#adharUploadFeedback').hide(); 
-                $('#invalidAadhaarImg').show(); 
+                $('#adharUploadFeedback').hide();
+                $('#invalidAadhaarImg').show();
                 isValid = false;
             } else {
                 $('#adharUploadFeedback').hide();
@@ -367,7 +369,7 @@
                                     text: 'Your registration has been successfully completed.'
                                 });
                                 //Reset();
-                                $('#mobile').removeClass('is-valid');
+                                $('#email').removeClass('is-valid');
                             },
                             error: function (xhr, status, error) {
                                 Swal.fire({
@@ -380,7 +382,7 @@
                     }
                 });
             }
-            else{
+            else {
                 Swal.fire({
                     icon: 'warning',
                     title: 'OTP Required',
@@ -405,54 +407,87 @@
             $('#adharUpload').val('');
             $('.invalid-feedback').hide();
         }
-        $('#btnGetOtp').click(function () {
-            var mobile = $('#mobile').val().trim();
-            var mobilePattern = /^[6-9][0-9]{9}$/;
-            if (mobile && mobilePattern.test(mobile)) {
-                // Simulate sending OTP
-                Swal.fire({
-                    title: 'Success',
-                    text: 'OTP sent to ' + mobile,
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
 
-                // Hide "Get OTP" button and show OTP input and Verify button
-                $('#getotp').hide();
-                $('#otp').show();
-                $('#verify').show();
+
+        $('#btnGetOtp').click(function () {
+            debugger;
+            var email = $('#email').val().trim();
+            var emailPattern = /^[a-zA-Z0-9_.+-]+@@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+            if (email !== '' && emailPattern.test(email)) {
+                // Generate a random 4-digit OTP
+                var otp = Math.floor(1000 + Math.random() * 9000);
+                $('#hideotp').val(otp);
+                // Send OTP email
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/SendOtpEmail",
+                    data: { recipientEmail: email, otp: otp },
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.success) {
+                            // Show success message
+                            Swal.fire({
+                                title: 'Success',
+                                text: 'OTP sent to ' + email,
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            });
+
+                            // Hide "Get OTP" button and show OTP input and Verify button
+                            $('#getotp').hide();
+                            $('#otp').show();
+                            $('#verify').show();
+                        } else {
+                            // Show error message
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Failed to send OTP email. Please try again later.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    },
+                    error: function () {
+                        // Show error message
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Failed to send to email. Please try again later.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
             } else {
                 Swal.fire({
                     title: 'Warning',
-                    text: 'Please enter a valid mobile number.',
+                    text: 'Please enter a valid email.',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                 });
-                OTPSubmit = 0;
             }
-
         });
 
         // Handle the "Verify" button click event
         $('#btnVerify').click(function () {
             var otp = $('#otp input').val().trim();
-            if (otp === '1234') { // Assuming 1234 is the correct OTP for demo purposes
+            var genotp = $('#hideotp').val();
+            if (otp === genotp) { // Assuming 1234 is the correct OTP for demo purposes
                 Swal.fire({
                     title: 'Success',
-                    text: 'Mobile number verified successfully',
+                    text: 'Email verified successfully',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 });
 
                 // Show a tick mark inside the mobile textbox
-                $('#mobile').addClass('is-valid');
+                $('#email').addClass('is-valid');
                 //$('#mobile').after('<span class="tick-mark">✔️</span>');
 
                 // Hide the OTP input and Verify button
                 $('#otp').hide();
                 $('#verify').hide();
                 OTPSubmit = 1;
-            } else if(otp===''){
+            } else if (otp === '') {
                 Swal.fire({
                     title: 'Warning',
                     text: 'Please enter OTP.',
@@ -468,7 +503,7 @@
                 });
                 OTPSubmit = 0;
             }
-            
+
 
         });
     </script>
