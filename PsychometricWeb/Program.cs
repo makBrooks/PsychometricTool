@@ -1,4 +1,5 @@
 using PsychometricWeb;
+using PsychometricWeb.Models;
 using PsychometricWeb.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IPsychometricRepo, PsychometricRepo>();
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.UserAuthenConfig();
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
