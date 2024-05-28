@@ -363,13 +363,48 @@
                             processData: false,
                             contentType: false,
                             success: function (response) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Registration Successful',
-                                    text: 'Your registration has been successfully completed.'
-                                });
-                                //Reset();
-                                $('#email').removeClass('is-valid');
+                                if (response == 10) {
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Username Already Exists',
+                                        text: 'The username you entered is already in use. Please choose a different username.'
+                                    });
+                                }
+                                else if (response == 11) {
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Aadhaar Number Already Exists',
+                                        text: 'The Aadhaar number you entered is already associated with another account. Please enter a different Aadhaar number.'
+                                    });
+                                }
+                                else if (response == 12) {
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Email Address Already Exists',
+                                        text: 'The email address you entered is already in use. Please enter a different email address.'
+                                    });
+                                }
+                                else if (response == 13) {
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Mobile Number Already Exists',
+                                        text: 'The mobile number you entered is already associated with another account. Please enter a different mobile number.'
+                                    });
+                                }
+                                else if (response == 1) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Registration Successful',
+                                        text: 'Your registration has been successfully completed.',
+                                        confirmButtonText: 'Ok'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            Reset();
+                                            $('#email').removeClass('is-valid');
+                                            window.location.href = '/Psycho/Login';
+                                        }
+                                    });
+                                }
                             },
                             error: function (xhr, status, error) {
                                 Swal.fire({
@@ -403,6 +438,7 @@
             $('#cpassword').val('');
             $('#email').val('');
             $('#mobile').val('');
+            $('#otp').val('');
             $('#adharNumber').val('');
             $('#adharUpload').val('');
             $('.invalid-feedback').hide();
@@ -417,7 +453,7 @@
                 // Generate a random 4-digit OTP
 
                 var otp = Math.floor(1000 + Math.random() * 9000);
-                var emailbody = "<html><head>    <meta charset=\"UTF-8\">    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">    <style>        body {            font-family: Arial, sans-serif;            background-color: #f4f4f4;            margin: 0;            padding: 0;        }        .container {            width: 100%;            max-width: 600px;            margin: 0 auto;            background-color: #ffffff;            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);            padding: 20px;            border-radius: 8px;        }        .header {            text-align: center;            padding: 10px 0;            border-bottom: 1px solid #eaeaea;        }        .header h1 {            margin: 0;            font-size: 24px;            color: #333333;        }        .content {            padding: 20px;            text-align: center;        }        .content p {            font-size: 16px;            color: #555555;            line-height: 1.5;        }        .otp {            font-size: 24px;            color: #333333;            margin: 20px 0;            font-weight: bold;        }        .footer {            text-align: center;            padding: 10px 0;            border-top: 1px solid #eaeaea;            font-size: 12px;            color: #aaaaaa;        }    </style></head><body>    <div class=\"container\">        <div class=\"header\">            <h1>Your OTP Code</h1>        </div>        <div class=\"content\">                    <p> Dear User,</p>            <p>We received a request to access your account. Use the following OTP to complete your login:</p>            <div class=\"otp\"> " + otp + " </div>                    <p> If you did not request this, please ignore this email or contact support.</p>        </div>                    <div class=\"footer\">                        <p> This is an automated message, please do not reply.</p>        </div>    </div></body></html > ";
+                var emailbody = "<html><head>    <meta charset=\"UTF-8\">    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">    <style>        body {            font-family: Arial, sans-serif;            background-color: #f4f4f4;            margin: 0;            padding: 0;        }        .container {            width: 100%;            max-width: 600px;            margin: 0 auto;            background-color: #ffffff;            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);            padding: 20px;            border-radius: 8px;        }        .header {            text-align: center;            padding: 10px 0;            border-bottom: 1px solid #eaeaea;        }        .header h1 {            margin: 0;            font-size: 24px;            color: #333333;        }        .content {            padding: 20px;            text-align: center;        }        .content p {            font-size: 16px;            color: #555555;            line-height: 1.5;        }        .otp {            font-size: 24px;            color: #333333;            margin: 20px 0;            font-weight: bold;        }        .footer {            text-align: center;            padding: 10px 0;            border-top: 1px solid #eaeaea;            font-size: 12px;            color: #aaaaaa;        }    </style></head><body>    <div class=\"container\">        <div class=\"header\">            <h1>Your OTP Code</h1>        </div>        <div class=\"content\">                    <p> Dear User,</p>            <p>We received a request to access your account. Use the following OTP to complete your registration:</p>            <div class=\"otp\"> " + otp + " </div>                    <p> If you did not request this, please ignore this email or contact support.</p>        </div>                    <div class=\"footer\">                        <p> This is an automated message, please do not reply.</p>        </div>    </div></body></html > ";
                 var emailData = {
                     EmailToId: email,
                     EmailSubject: "OTP for 'Psychometric Tool'",
@@ -438,7 +474,7 @@
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             });
-
+                            $('#hideotp').val('');
                             // Hide "Get OTP" button and show OTP input and Verify button
                             $('#getotp').hide();
                             $('#otp').show();
@@ -477,7 +513,7 @@
         $('#btnVerify').click(function () {
             var otp = $('#otp input').val().trim();
             var genotp = $('#hideotp').val();
-            if (otp === genotp) { // Assuming 1234 is the correct OTP for demo purposes
+            if (otp === genotp) {
                 Swal.fire({
                     title: 'Success',
                     text: 'Email verified successfully',
@@ -485,9 +521,9 @@
                     confirmButtonText: 'OK'
                 });
 
-                // Show a tick mark inside the mobile textbox
+                // Show a tick mark inside the email textbox
                 $('#email').addClass('is-valid');
-                //$('#mobile').after('<span class="tick-mark">✔️</span>');
+                //$('#email').after('<span class="tick-mark">✔️</span>');
 
                 // Hide the OTP input and Verify button
                 $('#otp').hide();
